@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="var(--main-color)" />
+    <title>Les Petits Plats</title>
+
+    <!-- External Calls -->
+    <link rel="preconnect" href="https://api.fonts.coollabs.io" crossorigin />
+    <link href="https://api.fonts.coollabs.io/css2?family=Anton&display=swap" rel="stylesheet" />
+    <link href="https://api.fonts.coollabs.io/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://api.fonts.coollabs.io/css2?family=Roboto&display=swap" rel="stylesheet" />
+    <!-- Owned Calls -->
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body class="home">
+
+   <header class="main-header">
+
+    <div class="top-header">
+        <a href="/" aria-label="lien vers la Homepage" tabindex="0">
+            <img src="assets/logo.png" alt="logo des Petits Plats">
+        </a>
+    </div> 
+
+    <div class="hero">
+        <h1 class="hero-title">cherchez parmi plus de 1500 recettes<br>
+            du quotidien,simples et délicieuses
+        </h1>
+
+        <form action="" class="the-form">
+            <label for="search"></label>
+            <input type="search" name="search" id="search" placeholder="Rechercher une recette,un ingrédient">
+            <button type="submit" class="btn btn-search" aria-label="bouton de recherche">X</button>
+        </form>
+    </div>
+
+   </header>
+
+   <main class="wrapper">
+
+    <section class="recipes-filter">
+
+        <form action="" class="form-select">
+
+            <select name="ingredient" id="ingredient" class="filters">
+                <option value="truc1">truc1</option>
+                <option value="truc2">truc2</option>
+                <option value="truc3">truc3</option>
+            </select>
+
+            <select name="appareils" id="appareils" class="filters">
+                <option value="truc1">truc1</option>
+                <option value="truc2">truc2</option>
+                <option value="rruc3">truc3</option>
+            </select>
+
+            <select name="ustensiles" id="ustensiles" class="filters">
+                <option value="truc1">truc1</option>
+                <option value="truc2">truc2</option>
+                <option value="truc3">truc3</option>
+            </select>
+        </form>
+
+        <div class="recipes-counter" aria-label="nombre de recettes disponibles"> <span class="count">XXXX</span> recettes</div>
+
+    </section>
+
+    <section class="recipes-container debeug">
+
+   </main>
+
+
+   <footer class="main-footer">
+    <div class="copyright">&copy; 2024 - Les Petits Plats by <a href="https://github.com/Mil00Z"><span> Mil00Z </span></a></div>
+   </footer>
+    
+
+</body>
+
+    <script type="text/javascript" src="./js/main.js"></script>
+    <!-- Datas -->
+    <script type="text/javascript" src="./js/recipes.js"></script>
+</html>

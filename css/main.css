@@ -1,0 +1,216 @@
+:root{
+--primary-color: #6C63FF;
+--secondary-color: #FFD15B;
+--third-color:#1B1B1B;
+
+--body-font-family: 'Anton', sans-serif;
+--body-font-size: 1rem;
+--body-font-color:var(--black-color);
+--body-background-color:var(--grey-light-color);
+
+--title-font-family: 'Anton', sans-serif;
+--title-font-size: 3rem;
+--title-font-color:var(--third-color);
+
+--white-color: #FFFFFF;
+--black-color:#000000;
+--grey-color:#7A7A7A;
+--grey-light-color:#EDEDED;
+--color-debeug:crimson;
+
+--weight-bold:600;
+--weight-light:400;
+--weight-extra:800;
+
+--skeleton:80%;
+--regular-spacing:1rem;
+--radius:5px;
+--regular-transi: all .3s ease-in-out;
+--debeug:3px dashed var(--color-debeug);
+}
+
+/* specs */
+* {
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background-color: var(--body-background-color);
+    font-family: var(--body-font-family);
+    font-size: var(--body-font-size);
+    color: var(--body-font-color);
+}
+
+.debeug {
+    outline: var(--debeug);
+}
+
+
+/* Search Form */
+
+.the-form{
+
+}
+
+.wrapper {
+    width:var(--skeleton);
+}
+
+/* Header */
+
+.main-header{
+--op:.3;
+width: 100%;
+height:700px;
+display: flex;
+padding: var(--regular-spacing);
+flex-wrap: wrap;
+justify-content: center;
+background: linear-gradient(to right,rgba(0, 0, 0, var(--op))30%, rgba(0, 0, 0, var(--op)) 100%), url('../assets/header-bg.jpg');
+background-size: cover;
+background-repeat: no-repeat;
+}
+
+
+.top-header {
+    width: 100%;
+    height:fit-content;
+    margin: 1.5rem;
+}
+
+.top-header > a {
+    display: block;
+    width: fit-content;
+}
+
+.hero {
+    --stretching:55%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} 
+
+.hero-title {
+    margin-bottom: 1rem;
+    font-size: var(--title-font-size);
+    line-height: 1.35;
+    text-transform: uppercase;
+    text-align: center;
+    color:var(--secondary-color);
+}
+
+.the-form{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: var(--stretching);
+}
+
+input[type="search"] {
+    width:100%;
+    height:60px;
+    padding:.6rem;
+    font-size:1rem;
+    color:var(--black-color);
+    font-weight:var(--weight-bold);
+    border-radius:var(--radius);
+    border: none;
+    background-color: var(--white-color);
+}
+
+.btn  {
+    --sizes:45px;
+    width:var(--sizes);
+    height:var(--sizes);
+    position: absolute;
+    top:50%;
+    right:8px;
+    transform: translate(0,-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color:var(--white-color);
+    border:none;
+    border-radius: var(--radius);
+    background-color: var(--black-color);
+    transition: var(--regular-transi);
+}
+
+.btn:hover,
+.btn:focus {
+    background-color: var(--secondary-color);
+    color:var(--black-color);
+    cursor: pointer;
+}
+
+
+
+/* List of Filters */
+.recipes-filter {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-block: calc(1.5 * var(--regular-spacing));
+}
+
+.filters {
+    --radius:5px;
+    width:200px;
+    height:60px;
+    padding:.6rem;
+    font-size:1rem;
+    color:var(--black-color);
+    border-radius:var(--radius);
+    border: none;    
+    background-color: var(--white-color);
+    transition: var(--regular-transi);
+}
+
+.filters:focus {
+    background-color: var(--secondary-color);
+    color:var(--black-color);                   
+    cursor: pointer;    
+}
+
+.filters:not(:first-of-type),
+.filters:not(:last-of-type) {
+    margin-left:1rem;
+}
+
+.filters option {
+    font-size:1rem;
+    color:currentColor;
+}
+
+.filters option:selected{
+    background:var(--black-color);
+    color:var(--white-color);
+}
+
+.recipes-counter {
+    font-size: 1.3rem;
+}
+
+
+
+
+/* List of Recipes */
+.recipes-container {
+    width:100%;
+    min-height:80dvh;
+}
+
+
+/* Footer */
+.main-footer {
+    margin-top:auto;
+    padding-block:var(--regular-spacing);
+}
