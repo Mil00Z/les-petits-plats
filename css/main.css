@@ -112,6 +112,13 @@ background-repeat: no-repeat;
     width: var(--stretching);
 }
 
+label,
+.labels {
+    width: 0;
+    height:0;
+    font-size: 0;
+}
+
 input[type="search"] {
     width:100%;
     height:60px;
@@ -122,6 +129,10 @@ input[type="search"] {
     border-radius:var(--radius);
     border: none;
     background-color: var(--white-color);
+}
+
+input[type="search"]::placeholder {
+    color:var(--grey-color);
 }
 
 .btn  {

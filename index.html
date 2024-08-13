@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://api.fonts.coollabs.io" crossorigin />
     <link href="https://api.fonts.coollabs.io/css2?family=Anton&display=swap" rel="stylesheet" />
     <link href="https://api.fonts.coollabs.io/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://api.fonts.coollabs.io/css2?family=Roboto&display=swap" rel="stylesheet" />
+    <link href="https://api.fonts.coollabs.io/css2?family=Manrope&display=swap" rel="stylesheet" />
     <!-- Owned Calls -->
     <link rel="stylesheet" href="./css/main.css">
 </head>
@@ -31,8 +31,8 @@
         </h1>
 
         <form action="" class="the-form">
-            <label for="search"></label>
-            <input type="search" name="search" id="search" placeholder="Rechercher une recette,un ingrédient">
+            <label for="search" class="labels">Recherche</label>
+            <input type="search" name="search" id="search" placeholder="Rechercher une recette, un ingrédient...">
             <button type="submit" class="btn btn-search" aria-label="bouton de recherche">X</button>
         </form>
     </div>
@@ -45,18 +45,21 @@
 
         <form action="" class="form-select">
 
+            <label for="ingredient" class="labels">ingredient</label>
             <select name="ingredient" id="ingredient" class="filters">
                 <option value="truc1">truc1</option>
                 <option value="truc2">truc2</option>
                 <option value="truc3">truc3</option>
             </select>
 
+            <label for="appareils" class="labels">appareils</label>
             <select name="appareils" id="appareils" class="filters">
                 <option value="truc1">truc1</option>
                 <option value="truc2">truc2</option>
                 <option value="rruc3">truc3</option>
             </select>
 
+            <label for="ustensiles" class="labels">ustensiles</label>
             <select name="ustensiles" id="ustensiles" class="filters">
                 <option value="truc1">truc1</option>
                 <option value="truc2">truc2</option>
