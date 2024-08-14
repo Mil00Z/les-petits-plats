@@ -112,13 +112,6 @@ background-repeat: no-repeat;
     width: var(--stretching);
 }
 
-label,
-.labels {
-    width: 0;
-    height:0;
-    font-size: 0;
-}
-
 input[type="search"] {
     width:100%;
     height:60px;
@@ -163,6 +156,14 @@ input[type="search"]::placeholder {
 
 
 
+label,
+.labels {
+    position: absolute;
+    height: 1px; 
+    width: 1px;
+    font-size:0;
+}
+
 /* List of Filters */
 .recipes-filter {
 
@@ -172,8 +173,13 @@ input[type="search"]::placeholder {
     margin-block: calc(1.5 * var(--regular-spacing));
 }
 
+.form-select{
+    --hidden:0;
+}
+
 .filters {
     --radius:5px;
+    --gap:3rem;
     width:200px;
     height:60px;
     padding:.6rem;
@@ -191,9 +197,9 @@ input[type="search"]::placeholder {
     cursor: pointer;    
 }
 
-.filters:not(:first-of-type),
-.filters:not(:last-of-type) {
-    margin-left:1rem;
+.filters:not(first-of-type),
+.filters:not(last-of-type) {
+    margin-right:var(--gap);
 }
 
 .filters option {
@@ -215,8 +221,57 @@ input[type="search"]::placeholder {
 
 /* List of Recipes */
 .recipes-container {
+    --gap:5dvw;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap:var(--gap) 1rem;
     width:100%;
     min-height:80dvh;
+}
+
+/* Card Recipe */
+.card-recipe {
+    --radius:21px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width:30%;
+    border-radius: var(--radius);
+    background-color: var(--white-color);
+    overflow: hidden;
+    transition: var(--regular-transi);
+}
+
+
+.recipe-content {
+    padding: var(--regular-spacing);
+}
+
+.recipe-thumbnail {
+    max-width: 100%;
+    height: 250px;
+    object-fit: cover;
+    flex-grow: 1;  
+}
+
+.recipe-title {
+    margin-block:.5rem;
+    font-size:1rem;
+    font-weight:var(--weight-regular);
+    color:var(--black-color);
+}
+
+.recipe-subtitle {
+    font-size:.95rem;
+    font-weight: 400;
+    color:var(--grey-color);
+}
+
+.recipe-description {
+    font-size:.8rem;
+    font-weight: 400;
+    color:var(--black-color);
 }
 
 

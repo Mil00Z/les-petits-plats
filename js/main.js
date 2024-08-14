@@ -7,6 +7,14 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
         console.log(`on ${currentPage} - Page`);
 
-        console.log(recipes);
+        recipes.forEach((recipe,index) =>{
+                
+           console.log(recipe);
+
+            const cardRecipe = new RecipeCard(recipe.name,recipe.description,recipe.time,recipe.image,recipe.id);
+
+            cardRecipe.createCard(recipe);
+
+        });
         
 }
