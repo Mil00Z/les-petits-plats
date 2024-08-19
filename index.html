@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="var(--main-color)">
+    <title>Les Petits Plats</title>
+
+    <!-- External Calls -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Owned Calls -->
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body class="home">
+
+   <header class="main-header">
+
+    <div class="top-header">
+        <a href="/" aria-label="lien vers la Homepage" tabindex="0">
+            <img src="assets/logo.png" alt="logo des Petits Plats">
+        </a>
+    </div> 
+
+    <div class="hero">
+        <h1 class="hero-title">cherchez parmi plus de 1500 recettes<br>
+            du quotidien,simples et délicieuses
+        </h1>
+
+        <form action="" class="the-form">
+            <label for="search" class="labels">Recherche</label>
+            <input type="search" name="search" id="search" placeholder="Rechercher une recette, un ingrédient...">
+            <button type="submit" class="btn btn-search" aria-label="bouton de recherche">X</button>
+        </form>
+    </div>
+
+   </header>
+
+   <main class="wrapper">
+
+    <section class="recipes-filter">
+
+        <form action="" class="form-select">
+
+            <label for="ingredient" class="labels">ingredient</label>
+            <select name="ingredient" id="ingredient" class="filters">
+                <option value="truc1">truc1</option>
+                <option value="truc2">truc2</option>
+                <option value="truc3">truc3</option>
+            </select>
+
+            <label for="appareils" class="labels">appareils</label>
+            <select name="appareils" id="appareils" class="filters">
+                <option value="truc1">truc1</option>
+                <option value="truc2">truc2</option>
+                <option value="rruc3">truc3</option>
+            </select>
+
+            <label for="ustensiles" class="labels">ustensiles</label>
+            <select name="ustensiles" id="ustensiles" class="filters">
+                <option value="truc1">truc1</option>
+                <option value="truc2">truc2</option>
+                <option value="truc3">truc3</option>
+            </select>
+
+            <div class="recipe-taglist">
+                <span class="recipe-tag"> Crème de Truc <i class="fa-solid fa-xmark"></i></span>
+                <span class="recipe-tag"> Crème de Truc <i class="fa-solid fa-xmark"></i></span>
+            </div>
+        </form>
+
+        <div class="recipes-counter" aria-label="nombre de recettes disponibles"> <span class="count">XXXX</span> recettes</div>
+
+    </section>
+
+    <section class="recipes-container">
+    </section>
+
+   </main>
+
+
+   <footer class="main-footer">
+    <div class="copyright">&copy; 2024 - Les Petits Plats by <a href="https://github.com/Mil00Z"><span> Mil00Z </span></a></div>
+   </footer>
+    
+
+
+</body>
+
+    
+    <script type="module" src="./js/templates/recipeCard.js"></script>
+    <!-- Datas -->
+    <script type="module" src="./datas/recipes.js"></script>
+    <script type="module" src="./js/main.js"></script>
+
+</html>
