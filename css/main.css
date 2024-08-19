@@ -215,10 +215,9 @@ label,
 }
 
 .recipes-counter {
+    font-family: var(--title-font-family);
     font-size: 1.3rem;
 }
-
-
 
 
 /* List of Recipes */
@@ -226,6 +225,7 @@ label,
     --gap:5dvw;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     align-items: center;
     gap:var(--gap) 1rem;
     width:100%;

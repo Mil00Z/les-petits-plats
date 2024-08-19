@@ -9,7 +9,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
         displayRecipe(recipes);
 
-
+  
         // Remove Tag         
         document.querySelector('.recipes-filter').addEventListener('click', (e) => {                  
         
@@ -19,6 +19,9 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
                 }                          
         });
+
+        // All Number of Recipes
+        document.querySelector('.recipes-counter .count').textContent = recipes.length;
 
 }
 
