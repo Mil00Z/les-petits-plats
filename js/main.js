@@ -9,6 +9,17 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
         displayRecipe(recipes);
 
+
+        // Remove Tag         
+        document.querySelector('.recipes-filter').addEventListener('click', (e) => {                  
+        
+        if (e.target.classList.contains('fa-solid')) {
+                
+                e.target.parentElement.remove();                 
+
+                }                          
+        });
+
 }
 
 
