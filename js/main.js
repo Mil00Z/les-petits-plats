@@ -5,16 +5,25 @@ const currentPage = 'home';
 
 if (document.body.classList.contains(`${currentPage}`)) {
 
-        console.log(`on ${currentPage} - Page`);
+        // console.log(`on ${currentPage} - Page`);
 
-        recipes.forEach((recipe,index) =>{
+        displayRecipe(recipes);
+
+}
+
+
+
+
+
+function displayRecipe(arrayElement){
+
+        arrayElement.forEach((recipe) =>{
                 
-           console.log(recipe);
+                const cardRecipe = new RecipeCard(recipe.name,recipe.description,recipe.time,recipe.image,recipe.ingredients,recipe.id);
+    
+                cardRecipe.createCard(recipe);
+    
+            });
 
-            const cardRecipe = new RecipeCard(recipe.name,recipe.description,recipe.time,recipe.image,recipe.id);
-
-            cardRecipe.createCard(recipe);
-
-        });
         
 }
