@@ -186,7 +186,13 @@ label,
     --hidden:0;
     display: flex;
     flex-wrap: wrap;
-    width: 60%;
+    flex-direction: column;
+    width: 75%;
+}
+
+.input-group{
+
+
 }
 
 .filters {
@@ -211,7 +217,7 @@ label,
 
 .filters:not(first-of-type),
 .filters:not(last-of-type) {
-    margin-right:var(--gap);
+    margin-right:1.5rem;
 }
 
 .filters option {
@@ -333,6 +339,7 @@ label,
 .recipe-taglist {
     --gap:2rem;
     display: flex;
+    flex-wrap: wrap;
     margin-block: 1.25rem;
     column-gap: var(--gap);
 }
@@ -360,4 +367,49 @@ label,
 .main-footer {
     margin-top:auto;
     padding-block:var(--regular-spacing);
+}
+
+@media all and (max-width:1080px) {
+
+    body{
+      --layout:'Until Regular Desktop';
+    }
+
+    .wrapper {
+        --skeleton:100%;
+        padding-inline:1rem;
+    }
+
+    .card-recipe{
+        width:fit-content;
+    }
+
+    .form-select{
+        width: 100%;
+    }
+
+    .recipes-container {
+        margin-top:1.5rem;
+    }
+
+    .recipes-counter {
+        align-self: start;
+        margin-top: 1rem;
+        font-size:1.5rem;
+        color:var(--secondary-color);
+    }
+
+    .count{
+        color:var(--black-color)
+    }
+
+    .recipes-filter{
+        flex-direction: column;
+        justify-content: start;
+    }
+
+    .recipe-taglist {
+        row-gap:calc(var(--gap) / 2);
+    }
+
 }
