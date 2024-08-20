@@ -176,7 +176,7 @@ label,
     --hidden:0;
     display: flex;
     flex-wrap: wrap;
-    width: 50%;
+    width: 60%;
 }
 
 .filters {
@@ -225,8 +225,7 @@ label,
     --gap:5dvw;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+    align-items: start;
     gap:var(--gap) 1rem;
     width:100%;
     min-height:80dvh;

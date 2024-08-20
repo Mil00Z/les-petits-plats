@@ -5,9 +5,9 @@ const currentPage = 'home';
 
 if (document.body.classList.contains(`${currentPage}`)) {
 
-        // console.log(`on ${currentPage} - Page`);
-
         displayRecipe(recipes);
+
+        updateCounterRecipes(recipes);
 
   
         // Remove Tag         
@@ -20,8 +20,68 @@ if (document.body.classList.contains(`${currentPage}`)) {
                 }                          
         });
 
-        // All Number of Recipes
-        document.querySelector('.recipes-counter .count').textContent = recipes.length;
+       
+
+        document.querySelector('#search').addEventListener('input',(e) => {
+
+                let nameMatching = [];
+                let descriptionMatching = [];
+                let ingredientMatching = [];
+
+                let resultsMatching = []
+
+                if(e.target.value.length >= 3) {
+
+                        console.log('***searching with this input text =>', e.target.value);
+
+
+                        for (let recipe in recipes){
+    
+                        let name = recipes[recipe].name;
+                        let description = recipes[recipe].description;
+                        let ingredient = recipes[recipe].ingredients.ingredient;
+
+                        // Search By
+                        if (description.includes(e.target.value)){
+
+                                resultsMatching.push(recipes[recipe]);
+
+                                document.querySelector('.recipes-container').innerHTML = '';
+
+                                // console.log(resultsMatching);
+
+                                displayRecipe(resultsMatching);
+
+
+                           } else if (name.includes(e.target.value)) {
+
+                                resultsMatching.push(recipes[recipe]);
+
+                                document.querySelector('.recipes-container').innerHTML = '';
+
+                                // console.log(resultsMatching);
+
+                                displayRecipe(resultsMatching);
+                                   
+                           }
+                           
+                        //    else {
+
+                        //         console.warn('no recipes matching with this sequence ::', e.target.value);
+
+                        //       }
+                        
+                        }
+
+                        console.log(resultsMatching);
+
+                        updateCounterRecipes(resultsMatching);
+
+                }
+
+                
+
+        });
 
 }
 
@@ -37,7 +97,11 @@ function displayRecipe(arrayElement){
     
                 cardRecipe.createCard(recipe);
     
-            });
+        });
+}
 
-        
+function updateCounterRecipes(datas) {
+
+        document.querySelector(`.count`).textContent = datas.length;
+
 }
