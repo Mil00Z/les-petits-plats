@@ -128,6 +128,16 @@ input[type="search"]::placeholder {
     color:var(--grey-color);
 }
 
+.btn-search i.fa-solid {
+    color:var(--secondary-color);
+    transition: var(--regular-transi);
+}
+
+form:focus-within .btn-search i {
+    color: var(--main-color);
+    transform: rotateY(180deg);
+}
+
 .btn  {
     --sizes:45px;
     width:var(--sizes);
@@ -149,8 +159,8 @@ input[type="search"]::placeholder {
 
 .btn:hover,
 .btn:focus {
-    background-color: var(--secondary-color);
-    color:var(--black-color);
+    background-color: var(--black-color);
+    color:var(--white-color);
     cursor: pointer;
 }
 
@@ -176,7 +186,7 @@ label,
     --hidden:0;
     display: flex;
     flex-wrap: wrap;
-    width: 50%;
+    width: 60%;
 }
 
 .filters {
@@ -215,10 +225,9 @@ label,
 }
 
 .recipes-counter {
+    font-family: var(--title-font-family);
     font-size: 1.3rem;
 }
-
-
 
 
 /* List of Recipes */
@@ -226,7 +235,7 @@ label,
     --gap:5dvw;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: start;
     gap:var(--gap) 1rem;
     width:100%;
     min-height:80dvh;
@@ -245,6 +254,10 @@ label,
     overflow: hidden;
     transition: var(--regular-transi);
     position: relative;
+}
+
+.card-recipe > a {
+    display:flex;
 }
 
 .recipe-parts{
