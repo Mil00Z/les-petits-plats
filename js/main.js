@@ -24,23 +24,26 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
         document.querySelector('#search').addEventListener('input',(e) => {
 
-                let nameMatching = [];
-                let descriptionMatching = [];
-                let ingredientMatching = [];
+			const minimalQueryLength = 3 ;
 
-                let resultsMatching = []
+            let nameMatching = [];
+            let descriptionMatching = [];
+            let ingredientMatching = [];
 
-                if(e.target.value.length >= 3) {
+            let resultsMatching = []
 
-                        console.log('***searching with this input text =>', e.target.value);
+                if(e.target.value.length >= minimalQueryLength) {
+
+                    console.log('***searching with this input text =>', e.target.value);
 
 
-                        for (let recipe in recipes){
+                    for (let recipe in recipes){
     
                         let name = recipes[recipe].name;
                         let description = recipes[recipe].description;
-                        let ingredient = recipes[recipe].ingredients.ingredient;
+                        let ingredientList = recipes[recipe].ingredients;
 
+                        
                         // Search By
                         if (description.includes(e.target.value)){
 
@@ -48,10 +51,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
                                 document.querySelector('.recipes-container').innerHTML = '';
 
-                                // console.log(resultsMatching);
-
                                 displayRecipe(resultsMatching);
-
 
                            } else if (name.includes(e.target.value)) {
 
@@ -59,30 +59,41 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
                                 document.querySelector('.recipes-container').innerHTML = '';
 
-                                // console.log(resultsMatching);
-
                                 displayRecipe(resultsMatching);
                                    
-                           }
-                           
-                        //    else {
+                           } else if (ingredientList) {
 
-                        //         console.warn('no recipes matching with this sequence ::', e.target.value);
+                            	for (let element in ingredientList) {
 
-                        //       }
-                        
-                        }
+								let nameIngredient = ingredientList[element].ingredient;
 
-                        console.log(resultsMatching);
+                                if (nameIngredient.includes(e.target.value)) {
+
+									console.log(nameIngredient)
+
+                                    resultsMatching.push(recipes[recipe]);
+
+									displayRecipe(resultsMatching);
+
+                                } 
+
+                			}
+
+         				   } else {
+                            console.warn('no recipes are matching with this search ==', e.target.value);
+                        }  
+
+						// Number of recipes matching conditions			    
+						 console.log(resultsMatching)
 
                         updateCounterRecipes(resultsMatching);
+					}
+			}	
 
-                }
+    });
 
-                
 
-        });
-
+// FINAL	
 }
 
 
@@ -96,6 +107,8 @@ function displayRecipe(arrayElement){
                 const cardRecipe = new RecipeCard(recipe.name,recipe.description,recipe.time,recipe.image,recipe.ingredients,recipe.id);
     
                 cardRecipe.createCard(recipe);
+
+                console.log(recipe);
     
         });
 }
