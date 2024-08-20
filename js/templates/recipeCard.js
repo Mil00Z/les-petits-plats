@@ -20,10 +20,15 @@ export class RecipeCard {
         article.dataset.recipeId = this._id;
         article.dataset.layout = this._layout;	
 
+        let link = document.createElement('a');
+        link.setAttribute('href',`https://www.google.com/search?q=${this._name}`); 
+
         let image = document.createElement('img');
         image.src = `assets/${this._image}`;
         image.alt = `image nommée : ${this._name}`;
         image.classList.add('recipe-thumbnail');
+
+        link.append(image);
 
         let content = document.createElement('div');
         content.classList.add('recipe-content');
@@ -74,7 +79,7 @@ export class RecipeCard {
         //Push Datas
         content.append(title,timing,recette,description,ingredient,ingredientList);
 
-        article.append(image,content);
+        article.append(link,content);
 
         document.querySelector('.recipes-container').append(article);
 
