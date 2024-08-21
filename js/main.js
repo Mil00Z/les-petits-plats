@@ -5,94 +5,91 @@ const currentPage = 'home';
 
 if (document.body.classList.contains(`${currentPage}`)) {
 
-        displayRecipe(recipes);
+    displayRecipe(recipes);
 
-        updateCounterRecipes(recipes);
+    updateCounterRecipes(recipes);
 
-  
-        // Remove Tag         
-        document.querySelector('.recipes-filter').addEventListener('click', (e) => {                  
+    // Remove Tag         
+    document.querySelector('.recipes-filter').addEventListener('click', (e) => {                  
         
-        if (e.target.classList.contains('fa-solid')) {
+    if (e.target.classList.contains('fa-solid')) {
                 
-                e.target.parentElement.remove();                 
+            e.target.parentElement.remove();                 
 
-                }                          
-        });
+            }                          
+    });
 
        
 
-        document.querySelector('#search').addEventListener('input',(e) => {
+    document.querySelector('#search').addEventListener('input',(e) => {
 
-			const minimalQueryLength = 3 ;
+		const minimalQueryLength = 3 ;
 
-            let nameMatching = [];
-            let descriptionMatching = [];
-            let ingredientMatching = [];
+        let nameMatching = [];
+        let descriptionMatching = [];
+        let ingredientMatching = [];
 
-            let resultsMatching = []
+        let resultsMatching = []
 
-                if(e.target.value.length >= minimalQueryLength) {
+        if(e.target.value.length >= minimalQueryLength) {
 
-                    console.log('***searching with this input text =>', e.target.value);
+            console.log('***searching with this input text =>', e.target.value);
 
 
-                    for (let recipe in recipes){
+            for (let recipe in recipes){
     
-                        let name = recipes[recipe].name;
-                        let description = recipes[recipe].description;
-                        let ingredientList = recipes[recipe].ingredients;
+            let name = recipes[recipe].name;
+            let description = recipes[recipe].description;
+            let ingredientList = recipes[recipe].ingredients;
 
                         
-                        // Search By
-                        if (description.includes(e.target.value)){
+            // Search By
+            if (description.includes(e.target.value)){
 
-                                resultsMatching.push(recipes[recipe]);
+            resultsMatching.push(recipes[recipe]);
 
-                                document.querySelector('.recipes-container').innerHTML = '';
+            document.querySelector('.recipes-container').innerHTML = '';
 
-                                displayRecipe(resultsMatching);
+            displayRecipe(resultsMatching);
 
-                           } else if (name.includes(e.target.value)) {
+            } else if (name.includes(e.target.value)) {
 
-                                resultsMatching.push(recipes[recipe]);
+            resultsMatching.push(recipes[recipe]);
 
-                                document.querySelector('.recipes-container').innerHTML = '';
+            document.querySelector('.recipes-container').innerHTML = '';
 
-                                displayRecipe(resultsMatching);
+            displayRecipe(resultsMatching);
                                    
-                           } else if (ingredientList) {
+            } else if (ingredientList) {
 
-                            	for (let element in ingredientList) {
+            for (let element in ingredientList) {
 
-								let nameIngredient = ingredientList[element].ingredient;
+			    let nameIngredient = ingredientList[element].ingredient;
 
-                                if (nameIngredient.includes(e.target.value)) {
+                if (nameIngredient.includes(e.target.value)) {
 
-									console.log(nameIngredient)
+                resultsMatching.push(recipes[recipe]);
 
-                                    resultsMatching.push(recipes[recipe]);
+				displayRecipe(resultsMatching);
 
-									displayRecipe(resultsMatching);
+                } 
 
-                                } 
+            }
 
-                			}
+         	} else {
 
-         				   } else {
-                            console.warn('no recipes are matching with this search ==', e.target.value);
-                        }  
+            console.warn('no recipes are matching with this search ==', e.target.value);
 
-						// Number of recipes matching conditions			    
-						 console.log(resultsMatching)
+            }  
 
-                        updateCounterRecipes(resultsMatching);
-					}
-			}	
+			// Number of recipes matching conditions			    
+			console.log(resultsMatching)
+
+            updateCounterRecipes(resultsMatching);
+		    }
+	    }	
 
     });
-
-
 // FINAL	
 }
 
@@ -108,8 +105,6 @@ function displayRecipe(arrayElement){
     
                 cardRecipe.createCard(recipe);
 
-                console.log(recipe);
-    
         });
 }
 
