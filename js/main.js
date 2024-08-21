@@ -1,6 +1,9 @@
 import { recipes } from "../datas/recipes.js";
 import { RecipeCard } from "./templates/recipeCard.js";
 
+// Sandbox of Results
+let resultsMatching = [];
+
 const currentPage = 'home';
 
 if (document.body.classList.contains(`${currentPage}`)) {
@@ -9,90 +12,45 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
     updateCounterRecipes(recipes);
 
-    // Remove Tag         
-    document.querySelector('.recipes-filter').addEventListener('click', (e) => {                  
-        
-    if (e.target.classList.contains('fa-solid')) {
-                
-            e.target.parentElement.remove();                 
-
-            }                          
-    });
-
-       
     // Search Bar Feature
     document.querySelector('#search').addEventListener('input',(e) => {
 
 		const minimalQueryLength = 3 ;
+        let searchValue = e.target.value.toLowerCase();
 
-        let nameMatching = [];
-        let descriptionMatching = [];
-        let ingredientMatching = [];
+        // SearchBar Clear => display all of datas
+        if(searchValue === "") {
 
-        let resultsMatching = []
+            displayRecipe(recipes);
 
-        if(e.target.value.length >= minimalQueryLength) {
+            return ;
 
-            // console.log('***searching with this input text =>', e.target.value);
+        }
 
-            for (let recipe in recipes){
-    
-            let name = recipes[recipe].name;
-            let description = recipes[recipe].description;
-            let ingredientList = recipes[recipe].ingredients;
 
-                        
-            // Search By Description
-            if (description.includes(e.target.value)){
+        if(searchValue.length >= minimalQueryLength) {
 
-            resultsMatching.push(recipes[recipe]);
+            resultsMatching = recipes.filter((recipe)=> {
 
-            document.querySelector('.recipes-container').innerHTML = '';
+                const nameMatch = recipe.name.toLowerCase().includes(searchValue);
+                const descriptionMatch = recipe.description.toLowerCase().includes(searchValue);
 
-            displayRecipe(resultsMatching);
+                const ingredientsArray = recipe.ingredients.map((ingredient)=> ingredient.ingredient.toLowerCase())
+               
+                const ingredientMatch = ingredientsArray.some((ingredient)=> {
 
-            // Search By Names
-            } else if (name.includes(e.target.value)) {
+                    return ingredient.includes(searchValue);
 
-            resultsMatching.push(recipes[recipe]);
+                });
 
-            document.querySelector('.recipes-container').innerHTML = '';
+                return nameMatch || descriptionMatch || ingredientMatch
+
+            });
 
             displayRecipe(resultsMatching);
-                             
-            // Search By Ingredient (in List)
-            } else if (ingredientList) {
-
-            for (let element in ingredientList) {
-
-			    let nameIngredient = ingredientList[element].ingredient;
-
-                if (nameIngredient.includes(e.target.value)) {
-
-                resultsMatching.push(recipes[recipe]);
-
-				displayRecipe(resultsMatching);
-
-                } 
-
-            }
-
-         	} else {
-
-            console.warn('no recipes are matching with this search ==', e.target.value);
-
-            }  
-
-			// Number of recipes matching conditions			    
-			console.log(resultsMatching)
-
-            updateCounterRecipes(resultsMatching);
-
-		    }
 	    }	
 
     });
-
 
 
     //Tags Feature
@@ -107,10 +65,34 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
             createTag(selectedIngred,parentIngred);
 
+            for (let subrecipe in recipes){
+
+                let name = recipes[subrecipe].name;
+               
+                if (name.includes(selectedIngred)) {
+
+                    console.log(name);
+                    
+                } else {
+
+                    console.log('mismatching selected option')
+                    
+                }
+            }
+
         });
     }
 
-   
+     // Remove Tags (testing width Highest level of delegation)        
+     document.querySelector('.recipes-filter').addEventListener('click', (e) => {                  
+        
+        if (e.target.classList.contains('fa-solid')) {
+                    
+                e.target.parentElement.remove();                 
+    
+                }                          
+        });
+
 // FINAL	
 }
 
@@ -120,14 +102,19 @@ if (document.body.classList.contains(`${currentPage}`)) {
 //FUNCTIONS
 function displayRecipe(arrayElement){
 
-        arrayElement.forEach((recipe) =>{
+    document.querySelector('.recipes-container').innerHTML = '';
+
+    arrayElement.forEach((recipe) =>{
                 
                 const cardRecipe = new RecipeCard(recipe.name,recipe.description,recipe.time,recipe.image,recipe.ingredients,recipe.id);
     
                 cardRecipe.createCard(recipe);
 
         });
+
+    updateCounterRecipes(arrayElement);
 }
+
 
 function updateCounterRecipes(datas) {
 
