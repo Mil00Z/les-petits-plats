@@ -2,7 +2,9 @@
 
 <img width="156" alt="logo-petits-plats" src="https://github.com/user-attachments/assets/0bd1c994-5d49-401e-b515-4e7b077ffdac">
 
-👉 mil00z.github.io/les-petits-plats/
+
+👉 https://mil00z.github.io/les-petits-plats/
+
 
 
 ## Base de code du projet P7 - Parcours Front-end
