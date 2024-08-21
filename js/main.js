@@ -42,7 +42,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
             let ingredientList = recipes[recipe].ingredients;
 
                         
-            // Search By
+            // Search By Description
             if (description.includes(e.target.value)){
 
             resultsMatching.push(recipes[recipe]);
@@ -51,6 +51,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
             displayRecipe(resultsMatching);
 
+            // Search By Names
             } else if (name.includes(e.target.value)) {
 
             resultsMatching.push(recipes[recipe]);
@@ -58,7 +59,8 @@ if (document.body.classList.contains(`${currentPage}`)) {
             document.querySelector('.recipes-container').innerHTML = '';
 
             displayRecipe(resultsMatching);
-                                   
+                             
+            // Search By Ingredient (in List)
             } else if (ingredientList) {
 
             for (let element in ingredientList) {
@@ -93,42 +95,20 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
 
 
-
-
-
     //Tags Feature
+    let filtersElement = document.querySelectorAll('.filters');
+    
+    for (let filter of filtersElement){
 
-    //Ingredients
-    document.querySelector('#ingredient').addEventListener('change', (e) => {
+        filter.addEventListener('change', (e) => {
 
-        let selectedIngred = e.target.value;
-        let parentIngred = e.target.getAttribute('id');
+            let selectedIngred = e.target.value;
+            let parentIngred = e.target.getAttribute('id');
 
-        createTag(selectedIngred,parentIngred);
+            createTag(selectedIngred,parentIngred);
 
-    });
-
-
-    //Appareils
-    document.querySelector('#appareils').addEventListener('change', (e) => {
-
-        let selectedIngred = e.target.value;
-        let parentIngred = e.target.getAttribute('id');
-
-        createTag(selectedIngred,parentIngred);
-
-    });
-
-
-    //Appareils
-    document.querySelector('#ustensiles').addEventListener('change', (e) => {
-
-        let selectedIngred = e.target.value;
-        let parentIngred = e.target.getAttribute('id');
-
-        createTag(selectedIngred,parentIngred);
-
-    });
+        });
+    }
 
    
 // FINAL	
@@ -137,7 +117,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
 
 
-
+//FUNCTIONS
 function displayRecipe(arrayElement){
 
         arrayElement.forEach((recipe) =>{
