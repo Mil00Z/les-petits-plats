@@ -8,7 +8,7 @@ export class RecipeCard {
             this._image = image;
             this._id = id;
             this._ingredients = ingredients;
-            this._layout = document.body.classList.value ?? 'undefined';
+            this._layout = document.body.classList.value ?? 'another-page';
 
     }
 
@@ -83,7 +83,8 @@ export class RecipeCard {
 
         document.querySelector('.recipes-container').append(article);
 
-        //  console.log(item);
+        // console.log(item);
+        
         return article;
     }
 

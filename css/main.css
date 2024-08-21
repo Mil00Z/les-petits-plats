@@ -347,9 +347,13 @@ label,
 
 .recipe-tag{
     --radius: 20px;
-    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: fit-content; */
+    width: 190px;
     background: var(--secondary-color);
-    padding: 1rem;
+    padding: 1rem .88rem;
     color: var(--grey-dark-color);
     border-radius: var(--radius);
 }
@@ -359,11 +363,19 @@ label,
     cursor: pointer;
 }
 
+
+.recipe-tag > i:hover,
+.recipe-tag > i:focus {
+    font-size:1.25rem;
+}
+
 .recipe-quantity {
     color: var(--grey-color);  
 }
 
-/* Footer */
+
+
+/* FOOTER */
 .main-footer {
     margin-top:auto;
     padding-block:var(--regular-spacing);
