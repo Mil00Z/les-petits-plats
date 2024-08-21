@@ -20,7 +20,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
     });
 
        
-
+    // Search Bar Feature
     document.querySelector('#search').addEventListener('input',(e) => {
 
 		const minimalQueryLength = 3 ;
@@ -33,8 +33,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
         if(e.target.value.length >= minimalQueryLength) {
 
-            console.log('***searching with this input text =>', e.target.value);
-
+            // console.log('***searching with this input text =>', e.target.value);
 
             for (let recipe in recipes){
     
@@ -86,10 +85,52 @@ if (document.body.classList.contains(`${currentPage}`)) {
 			console.log(resultsMatching)
 
             updateCounterRecipes(resultsMatching);
+
 		    }
 	    }	
 
     });
+
+
+
+
+
+
+    //Tags Feature
+
+    //Ingredients
+    document.querySelector('#ingredient').addEventListener('change', (e) => {
+
+        let selectedIngred = e.target.value;
+        let parentIngred = e.target.getAttribute('id');
+
+        createTag(selectedIngred,parentIngred);
+
+    });
+
+
+    //Appareils
+    document.querySelector('#appareils').addEventListener('change', (e) => {
+
+        let selectedIngred = e.target.value;
+        let parentIngred = e.target.getAttribute('id');
+
+        createTag(selectedIngred,parentIngred);
+
+    });
+
+
+    //Appareils
+    document.querySelector('#ustensiles').addEventListener('change', (e) => {
+
+        let selectedIngred = e.target.value;
+        let parentIngred = e.target.getAttribute('id');
+
+        createTag(selectedIngred,parentIngred);
+
+    });
+
+   
 // FINAL	
 }
 
@@ -110,6 +151,22 @@ function displayRecipe(arrayElement){
 
 function updateCounterRecipes(datas) {
 
-        document.querySelector(`.count`).textContent = datas.length;
+    document.querySelector(`.count`).textContent = datas.length;
+
+}
+
+function createTag(element,parentElement){
+
+    // console.log(element);
+
+    let tag = document.createElement('span');
+    tag.classList.add('recipe-tag');
+    tag.setAttribute('data-parent',parentElement);
+
+    tag.innerHTML = `
+    ${element}
+    <i class="fa-solid fa-xmark"></i>
+    `
+    document.querySelector('.recipe-taglist').appendChild(tag);
 
 }
