@@ -1,16 +1,15 @@
 import { recipes } from "../datas/recipes.js";
 import { RecipeCard } from "./templates/recipeCard.js";
 
+
 // Sandbox of Results
 let resultsMatching = [];
 
 const currentPage = 'home';
-
 if (document.body.classList.contains(`${currentPage}`)) {
 
-    displayRecipe(recipes);
-
-    updateCounterRecipes(recipes);
+    // Display Starter Elements
+    init();
 
     // Search Bar Feature
     document.querySelector('#search').addEventListener('input',(e) => {
@@ -48,6 +47,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
             });
 
             displayRecipe(resultsMatching);
+
 	    }	
 
     });
@@ -55,7 +55,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
     //Tags Feature
     let filtersElement = document.querySelectorAll('.filters');
-    
+
     for (let filter of filtersElement){
 
         filter.addEventListener('change', (e) => {
@@ -83,7 +83,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
         });
     }
 
-     // Remove Tags (testing width Highest level of delegation)        
+    // Remove Tags (testing width Highest level of delegation)        
      document.querySelector('.recipes-filter').addEventListener('click', (e) => {                  
         
         if (e.target.classList.contains('fa-solid')) {
@@ -93,6 +93,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
                 }                          
         });
 
+
 // FINAL	
 }
 
@@ -100,17 +101,34 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
 
 //FUNCTIONS
+async function init () {
+
+    //Display Datas
+    displayRecipe(recipes);
+
+    //Get Filters Initials Data
+    getAppliancesData(recipes);
+
+    getUstensilsData(recipes);
+
+    getIngredientsData(recipes);
+
+}
+
+
 function displayRecipe(arrayElement){
 
     document.querySelector('.recipes-container').innerHTML = '';
 
-    arrayElement.forEach((recipe) =>{
+    arrayElement.forEach((recipe,index) =>{
                 
-                const cardRecipe = new RecipeCard(recipe.name,recipe.description,recipe.time,recipe.image,recipe.ingredients,recipe.id);
+                const cardRecipe = new RecipeCard(recipe.name,recipe.description,recipe.time,recipe.image,recipe.ingredients,recipe.id,index);
     
                 cardRecipe.createCard(recipe);
 
-        });
+                // console.log(recipe);
+
+    });
 
     updateCounterRecipes(arrayElement);
 }
@@ -137,3 +155,74 @@ function createTag(element,parentElement){
     document.querySelector('.recipe-taglist').appendChild(tag);
 
 }
+
+function getUpdateResults(){
+
+    return resultsMatching;
+}
+
+
+function getAppliancesData(arrayData){
+
+    let allAppliances = arrayData.map((recipe) =>{
+        return recipe.appliance ;
+    });
+
+    // /Get distinct item of a collection of values
+    let appliances = Array.from(new Set(allAppliances));
+
+        console.log('^^ list appareils', appliances);
+    
+}
+
+function getUstensilsData(arrayData){  
+
+    let ustenList = [];
+
+    let ustensilsArrays = arrayData.map((recipe) => {
+
+        return recipe.ustensils;
+
+    });
+
+    ustensilsArrays.forEach((singleUstensilArray) => {
+
+        ustenList = ustenList.concat(singleUstensilArray);
+    });
+
+    let ustensils = Array.from(new Set(ustenList));
+
+        console.log('** list ustensiles',ustensils);
+
+
+ }
+
+
+function getIngredientsData(arrayData){
+
+    let ingredList = [];
+
+    let ingredientsArrays = arrayData.map((recipe) => {
+
+        return recipe.ingredients
+   });
+
+   
+    ingredientsArrays.forEach((singleIngredientArray) => {
+
+        let singleIngred = singleIngredientArray.map((element) =>{
+
+            return element.ingredient;
+        })
+
+        ingredList = ingredList.concat(singleIngred)
+
+});
+
+    let ingredients = Array.from(new Set(ingredList));
+
+    console.log('__ list ingredients',ingredients);
+
+
+}
+
