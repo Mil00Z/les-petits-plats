@@ -1,6 +1,6 @@
 export class RecipeCard {
 
-        constructor(name,description,time,image,ingredients,id) {
+        constructor(name,description,time,image,ingredients,id,index) {
 
             this._name = name;
             this._description = description;
@@ -8,6 +8,7 @@ export class RecipeCard {
             this._image = image;
             this._id = id;
             this._ingredients = ingredients;
+            this._index = index;
             this._layout = document.body.classList.value ?? 'another-page';
 
     }
@@ -18,6 +19,7 @@ export class RecipeCard {
         let article = document.createElement('article');
         article.classList.add('card','card-recipe');
         article.dataset.recipeId = this._id;
+        article.dataset.index = this._index;
         article.dataset.layout = this._layout;	
 
         let link = document.createElement('a');
