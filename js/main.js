@@ -53,6 +53,12 @@ if (document.body.classList.contains(`${currentPage}`)) {
     });
 
 
+
+
+
+
+
+
     //Tags Feature
     let filtersElement = document.querySelectorAll('.filters');
 
@@ -107,11 +113,16 @@ async function init () {
     displayRecipe(recipes);
 
     //Get Filters Initials Data
-    getAppliancesData(recipes);
+    let appliances = getAppliancesData(recipes);
 
-    getUstensilsData(recipes);
+    let ustensils = getUstensilsData(recipes);
 
-    getIngredientsData(recipes);
+    let ingredients = getIngredientsData(recipes);
+
+	 displayAvailableFilter(ingredients,'#ingredients');
+	 displayAvailableFilter(ustensils,'#ustensils');
+	 displayAvailableFilter(appliances,'#appliances');
+
 
 }
 
@@ -165,13 +176,15 @@ function getUpdateResults(){
 function getAppliancesData(arrayData){
 
     let allAppliances = arrayData.map((recipe) =>{
-        return recipe.appliance ;
+        return recipe.appliance.toLowerCase();
     });
 
     // /Get distinct item of a collection of values
     let appliances = Array.from(new Set(allAppliances));
 
-        console.log('^^ list appareils', appliances);
+      //   console.log('^^ list appareils', appliances);
+
+		  return appliances;
     
 }
 
@@ -187,13 +200,21 @@ function getUstensilsData(arrayData){
 
     ustensilsArrays.forEach((singleUstensilArray) => {
 
-        ustenList = ustenList.concat(singleUstensilArray);
+
+		  let singleUstensil = singleUstensilArray.map((element) =>{
+			  return element.toLowerCase();
+		  });
+
+        ustenList = ustenList.concat(singleUstensil);
+
     });
+
 
     let ustensils = Array.from(new Set(ustenList));
 
         console.log('** list ustensiles',ustensils);
 
+		return ustensils;
 
  }
 
@@ -212,7 +233,7 @@ function getIngredientsData(arrayData){
 
         let singleIngred = singleIngredientArray.map((element) =>{
 
-            return element.ingredient;
+            return element.ingredient.toLowerCase();
         })
 
         ingredList = ingredList.concat(singleIngred)
@@ -221,8 +242,25 @@ function getIngredientsData(arrayData){
 
     let ingredients = Array.from(new Set(ingredList));
 
-    console.log('__ list ingredients',ingredients);
+   //  console.log('__ list ingredients',ingredients);
 
+		return ingredients;
+}
+
+
+function displayAvailableFilter(arrayItems,filterTarget){
+
+	const selectedFilter = document.querySelector(`${filterTarget}`);
+
+	arrayItems.forEach((item) => {
+
+		let option = document.createElement('option');
+		option.setAttribute('value',item);
+		option.textContent = item ;
+
+		selectedFilter.append(option);
+
+	});
 
 }
 
