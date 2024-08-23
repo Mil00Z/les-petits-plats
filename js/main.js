@@ -12,7 +12,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
     init();
 
     // Search Bar Feature
-    document.querySelector('#search').addEventListener('input',(e) => {
+    document.querySelector('#main-search').addEventListener('input',(e) => {
 
 		const minimalQueryLength = 3 ;
         let searchValue = e.target.value.toLowerCase();
