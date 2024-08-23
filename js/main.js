@@ -53,51 +53,48 @@ if (document.body.classList.contains(`${currentPage}`)) {
     });
 
 
-
-
-
-
-
-
     //Tags Feature
-    let filtersElement = document.querySelectorAll('.filters');
+    let filtersElement = document.querySelectorAll('.search-results');
 
     for (let filter of filtersElement){
 
-        filter.addEventListener('change', (e) => {
+        filter.addEventListener('click', (e) => {
 
-            let selectedIngred = e.target.value;
-            let parentIngred = e.target.getAttribute('id');
+            let selectedIngred = e.target.textContent;
+				
+            let parentIngred = filter.previousElementSibling.getAttribute('id');
 
             createTag(selectedIngred,parentIngred);
 
-            for (let subrecipe in recipes){
+			
+            // for (let subrecipe in recipes){
 
-                let name = recipes[subrecipe].name;
+            //     let name = recipes[subrecipe].name;
                
-                if (name.includes(selectedIngred)) {
+            //     if (name.includes(selectedIngred)) {
 
-                    console.log(name);
+            //         console.log(name);
                     
-                } else {
+            //     } else {
 
-                    console.log('mismatching selected option')
+            //         console.log('mismatching selected option')
                     
-                }
-            }
+            //     }
+            // }
 
         });
     }
 
     // Remove Tags (testing width Highest level of delegation)        
-     document.querySelector('.recipes-filter').addEventListener('click', (e) => {                  
-        
+     document.querySelector('.recipe-taglist').addEventListener('click', (e) => {         
+		
         if (e.target.classList.contains('fa-solid')) {
                     
                 e.target.parentElement.remove();                 
     
-                }                          
-        });
+         }                          
+
+	 	});
 
 
 // FINAL	
@@ -120,8 +117,8 @@ async function init () {
     let ingredients = getIngredientsData(recipes);
 
 	 displayAvailableFilter(ingredients,'#ingredients');
-	 displayAvailableFilter(ustensils,'#ustensils');
 	 displayAvailableFilter(appliances,'#appliances');
+	 displayAvailableFilter(ustensils,'#ustensils');
 
 
 }
@@ -250,14 +247,15 @@ function getIngredientsData(arrayData){
 
 function displayAvailableFilter(arrayItems,filterTarget){
 
-	const selectedFilter = document.querySelector(`${filterTarget}`);
+	let selectedFilter = document.querySelector(`${filterTarget} + .search-results`);
+
 
 	arrayItems.forEach((item) => {
 
-		let option = document.createElement('option');
+		let option = document.createElement('li');
+		option.classList.add('option');
 		option.setAttribute('value',item);
 		option.textContent = item ;
-
 		selectedFilter.append(option);
 
 	});

@@ -45,24 +45,48 @@
 
         <form action="" class="form-select">
 
-            <div class="input-group">
+            <div class="filters-group">
 
-                <label for="ingredients" class="labels">ingredient</label>
-                <select name="ingredients" id="ingredients" class="filters">
+                <div class="filters">
+                    <label for="ingredients" class="labels">Ingrédients <i class="fa-solid fa-angle-down"></i></label>
+                    <input type="search" name="ingredients" id="ingredients" class="search-filter">
+
+                    <ul class="search-results">
+                    </ul>
+                </div>
+
+                <div class="filters">
+                    <label for="appliances" class="labels">Appareils<i class="fa-solid fa-angle-down"></i></label>
+                    <input type="search" name="appliances" id="appliances" class="search-filter">
+
+                    <ul class="search-results">
+                    </ul>
+                </div>
+
+                <div class="filters">
+                    <label for="ustensils" class="labels">Ustensiles<i class="fa-solid fa-angle-down"></i></label>
+                    <input type="search" name="ustensils" id="ustensils" class="search-filter">
+
+                    <ul class="search-results">
+                    </ul>
+                </div>
+
+                <!-- <label for="ingredients" class="v-hidden">Ustensiles</label>
+                <select name="ustensils" id="ustensils" class="filtrs">
                 </select>
 
-                <label for="appliances" class="labels">appareils</label>
-                <select name="appliances" id="appliances" class="filters">
+                <label for="appliances" class="v-hidden">appareils</label>
+                <select name="appliances" id="appliances" class="filtrs">
                 </select>
 
-
-                <label for="ustensils" class="labels">ustensiles</label>
-                <select name="ustensils" id="ustensils" class="filters">
-                </select>
+                <label for="ustensils" class="v-hidden">ustensiles</label>
+                <select name="ustensils" id="ustensils" class="filtrs">
+                </select> -->
 
             </div>
             
             <div class="recipe-taglist">
+
             </div>
 
         </form>
