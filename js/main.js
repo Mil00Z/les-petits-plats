@@ -46,11 +46,21 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
             });
 
+            // Update LocalStorage Datas
+            updateResults(resultsMatching);
+
+            // Display Currents Results
             displayRecipe(resultsMatching);
 
 	    }	
 
     });
+
+    //Check existence of datas out the scope
+    if(window.localStorage.getItem('results-matching') === null){
+
+        console.warn('No datas searched available');
+    }
 
 
     //Tags Feature
@@ -111,15 +121,12 @@ async function init () {
 
     //Get Filters Initials Data
     let appliances = getAppliancesData(recipes);
-
     let ustensils = getUstensilsData(recipes);
-
     let ingredients = getIngredientsData(recipes);
 
 	 displayAvailableFilter(ingredients,'#ingredients');
 	 displayAvailableFilter(appliances,'#appliances');
 	 displayAvailableFilter(ustensils,'#ustensils');
-
 
 }
 
@@ -164,9 +171,18 @@ function createTag(element,parentElement){
 
 }
 
-function getUpdateResults(){
+function updateResults(arrayDatas){
 
-    return resultsMatching;
+    window.localStorage.setItem('results-matching',JSON.stringify(arrayDatas));
+
+}
+
+function getResults(arrayDatas) {
+
+    if (window.localStorage.getItem('results-matching') !== null) {
+
+        return arrayDatas = JSON.parse(window.localStorage.getItem('results-matching'));
+    }
 }
 
 
@@ -209,7 +225,7 @@ function getUstensilsData(arrayData){
 
     let ustensils = Array.from(new Set(ustenList));
 
-        console.log('** list ustensiles',ustensils);
+        // console.log('** list ustensiles',ustensils);
 
 		return ustensils;
 
@@ -248,6 +264,8 @@ function getIngredientsData(arrayData){
 function displayAvailableFilter(arrayItems,filterTarget){
 
 	let selectedFilter = document.querySelector(`${filterTarget} + .search-results`);
+
+    selectedFilter.innerHTML = '';
 
 
 	arrayItems.forEach((item) => {

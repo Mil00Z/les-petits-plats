@@ -303,6 +303,11 @@ form:focus-within .btn-search i {
     font-size: 1.3rem;
 }
 
+.count {
+    font-size: 1.35rem;
+    color:var(--color-debeug);
+}
+
 
 /* List of Recipes */
 .recipes-container {
