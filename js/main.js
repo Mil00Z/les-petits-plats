@@ -20,12 +20,11 @@ if (document.body.classList.contains(`${currentPage}`)) {
         // SearchBar Clear => display all of datas
         if(searchValue === "") {
 
-            displayRecipe(recipes);
+            init();
 
             return ;
 
         }
-
 
         if(searchValue.length >= minimalQueryLength) {
 
@@ -59,6 +58,9 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
             displayAvailableFilter(getIngredientsData(resultsMatching),'#ingredients');
 
+
+            updateNowIngredients(resultsMatching);
+
 	    }	
 
     });
@@ -83,22 +85,36 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
             createTag(selectedIngred,parentIngred);
 
-			
-            // for (let subrecipe in recipes){
+            console.log('**recettes filtrees 1',resultsMatching,selectedIngred);
 
-            //     let name = recipes[subrecipe].name;
-               
-            //     if (name.includes(selectedIngred)) {
+            if (parentIngred === 'ingredients') {
 
-            //         console.log(name);
-                    
-            //     } else {
+                let moreFiltered = resultsMatching.filter((recipe) =>{
 
-            //         console.log('mismatching selected option')
-                    
-            //     }
-            // }
+                    let ingredientsArray = recipe.ingredients.map((ingredient)=> {
 
+                        return ingredient.ingredient.toLowerCase();
+                
+                    });
+    
+                    let ingredientMatch = ingredientsArray.some((ingredient)=> {
+                        
+                        return ingredient.includes(selectedIngred);
+                    });
+                   
+                    return ingredientMatch;
+        
+                });
+                
+                 displayRecipe(moreFiltered);
+                console.log('%%% Recettes filtrees 2',moreFiltered);
+
+            } else {
+
+                console.warn('no Recipes matching');
+            }
+            
+    
         });
     }
 
@@ -145,10 +161,10 @@ function displayRecipe(arrayElement){
     arrayElement.forEach((recipe,index) =>{
                 
                 const cardRecipe = new RecipeCard(recipe.name,recipe.description,recipe.time,recipe.image,recipe.ingredients,recipe.id,index);
-    
-                cardRecipe.createCard(recipe);
 
-                // console.log(recipe);
+                cardRecipe.createCard(recipe);
+            
+            // console.log(recipe);
 
     });
 
@@ -184,12 +200,33 @@ function updateResults(arrayDatas){
 
 }
 
-function getResults(arrayDatas) {
+function getResults( ) {
 
     if (window.localStorage.getItem('results-matching') !== null) {
 
         return arrayDatas = JSON.parse(window.localStorage.getItem('results-matching'));
     }
+}
+
+function updateNowIngredients(arrayDatas) {
+
+    let inputSearch = document.querySelector('#ingredients');
+
+    inputSearch.addEventListener('input', (e) => {
+
+        const currentString = e.target.value.toLowerCase();
+
+        let namesIngredients = getIngredientsData(arrayDatas);
+
+        let filteredIngredients = namesIngredients.filter((ingred) =>{
+
+            return ingred.includes(currentString);
+        })
+
+        displayAvailableFilter(filteredIngredients,'#ingredients');
+
+    });
+    
 }
 
 
