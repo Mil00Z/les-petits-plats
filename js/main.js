@@ -52,6 +52,13 @@ if (document.body.classList.contains(`${currentPage}`)) {
             // Display Currents Results
             displayRecipe(resultsMatching);
 
+            //Updates and Display News Filters with Currents Results
+            displayAvailableFilter(getAppliancesData(resultsMatching),"#appliances");
+
+            displayAvailableFilter(getUstensilsData(resultsMatching),'#ustensils');
+
+            displayAvailableFilter(getIngredientsData(resultsMatching),'#ingredients');
+
 	    }	
 
     });
