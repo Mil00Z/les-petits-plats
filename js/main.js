@@ -58,12 +58,18 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
             displayAvailableFilter(getIngredientsData(resultsMatching),'#ingredients');
 
-
             updateNowIngredients(resultsMatching);
+            updateNowUstensils(resultsMatching);
+            updateNowAppliances(resultsMatching);
 
 	    }	
 
     });
+
+   
+console.log(getResults());
+ 
+
 
     //Check existence of datas out the scope
     if(window.localStorage.getItem('results-matching') === null){
@@ -87,9 +93,11 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
             console.log('**recettes filtrees 1',resultsMatching,selectedIngred);
 
+            let moreFiltered;
+
             if (parentIngred === 'ingredients') {
 
-                let moreFiltered = resultsMatching.filter((recipe) =>{
+                moreFiltered = resultsMatching.filter((recipe) =>{
 
                     let ingredientsArray = recipe.ingredients.map((ingredient)=> {
 
@@ -106,24 +114,52 @@ if (document.body.classList.contains(`${currentPage}`)) {
         
                 });
                 
-                 displayRecipe(moreFiltered);
-                console.log('%%% Recettes filtrees 2',moreFiltered);
+            } else if (parentIngred === 'ustensils'){
 
+
+                moreFiltered = resultsMatching.filter((recipe) => {
+
+                  let ustensilsArray = recipe.ustensils.some((ustensils) => {
+
+                    return ustensils.includes(selectedIngred);
+
+                  });  
+
+                  return ustensilsArray;
+
+            });
+
+            } else if (parentIngred === 'appliances') {
+            
+                moreFiltered = resultsMatching.filter((recipe) => {
+
+                    console.log(recipe);
+
+                    return recipe.appliance.toLowerCase().includes(selectedIngred);
+
+                })
+
+            
             } else {
 
-                console.warn('no Recipes matching');
-            }
-            
-    
-        });
+                    console.warn('no Recipes matching');
+                }
+
+                displayRecipe(moreFiltered);
+                console.log('%%% Recettes filtrees 2',moreFiltered);
+                
+            });
     }
+
 
     // Remove Tags (testing width Highest level of delegation)        
      document.querySelector('.recipe-taglist').addEventListener('click', (e) => {         
 		
         if (e.target.classList.contains('fa-solid')) {
                     
-                e.target.parentElement.remove();                 
+                e.target.parentElement.remove();
+                
+                
     
          }                          
 
@@ -200,9 +236,11 @@ function updateResults(arrayDatas){
 
 }
 
-function getResults( ) {
+function getResults() {
 
     if (window.localStorage.getItem('results-matching') !== null) {
+
+        let arrayDatas
 
         return arrayDatas = JSON.parse(window.localStorage.getItem('results-matching'));
     }
@@ -228,6 +266,50 @@ function updateNowIngredients(arrayDatas) {
     });
     
 }
+
+function updateNowUstensils(arrayDatas) {
+
+    let inputSearch = document.querySelector('#ustensils');
+
+    inputSearch.addEventListener('input', (e) => {
+
+        const currentString = e.target.value.toLowerCase();
+
+        let namesUstensils = getUstensilsData(arrayDatas);
+
+        let filteredUstensils = namesUstensils.filter((ustensil) =>{
+
+            return ustensil.includes(currentString);
+        })
+
+        displayAvailableFilter(filteredUstensils,'#ustensils');
+
+    });
+    
+}
+
+function updateNowAppliances (arraydatas) {
+
+    let inputSearch = document.querySelector('#appliances');
+
+    inputSearch.addEventListener('input', (e) => {
+
+        const currentString = e.target.value.toLowerCase();
+
+        let namesAppliances = getAppliancesData(arrayDatas);
+
+        let filteredAppliances = namesAppliances.filter((appliance) =>{
+
+            return appliance.includes(currentString);
+        })
+
+        displayAvailableFilter(filteredAppliances,'#appliances');
+
+    });
+
+}
+
+
 
 
 function getAppliancesData(arrayData){
