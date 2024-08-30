@@ -1,6 +1,23 @@
 import { recipes } from "../datas/recipes.js";
 import { RecipeCard } from "./templates/recipeCard.js";
 
+// let helloRecipes=[];
+
+// const newRecipes = fetch('datas/recipes.json');
+// newRecipes.then((response) => response.json())
+// .then((data) => {
+//    let helloRecipes = data.recipes;
+//    displayRecipes(helloRecipes);
+
+//    helloRecipes.forEach((recipe) => {
+
+//     console.log(recipe)
+
+//        helloRecipes.push(recipe);
+//    })
+
+// });
+
 
 // Sandbox of Results
 let resultsMatching = [];
