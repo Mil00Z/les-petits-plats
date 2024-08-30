@@ -107,14 +107,18 @@ async function init () {
     let appliances = getAppliancesData(recipes);
     let ustensils = getUstensilsData(recipes);
     let ingredients = getIngredientsData(recipes);
+    let timings = getTimingData(recipes);
 
+    
 	 displayAvailableFilter(recipes,ingredients,'#ingredients');
 	 displayAvailableFilter(recipes,appliances,'#appliances');
 	 displayAvailableFilter(recipes,ustensils,'#ustensils');
+     displayAvailableFilter(recipes,timings,'#timing');
 
      updateNowIngredients(recipes);
      updateNowUstensils(recipes);
      updateNowAppliances(recipes);
+     updateNowTimings(recipes);
 
 }
 
@@ -308,6 +312,28 @@ function updateNowAppliances (arrayDatas) {
 
 }
 
+function updateNowTimings(arrayDatas){
+
+    let inputSearch = document.querySelector('#timing');
+
+    inputSearch.addEventListener('input', (e) => {
+
+        const currentString = e.target.value.toLowerCase();
+
+        let valuesTiming = getTimingData(arrayDatas);
+
+    
+        let filteredTiming = valuesTiming.filter((time) =>{
+           
+            return time.toString().includes(currentString);
+        })
+
+        displayAvailableFilter(arrayDatas,filteredTiming,'#timing');
+
+    });
+
+}
+
 function getAppliancesData(arrayData){
 
     let allAppliances = arrayData.map((recipe) =>{
@@ -381,6 +407,22 @@ function getIngredientsData(arrayData){
 		return ingredients;
 }
 
+
+function getTimingData(arrayData) {
+    
+    let allTiming = arrayData.map((recipe)=> {
+
+            return recipe.time;
+
+    });
+
+    let timings = Array.from(new Set(allTiming));
+
+    return timings;
+}
+
+
+
 function displayAvailableFilter(arrayDatas,arrayItems,filterTarget){
 
 	let selectedFilter = document.querySelector(`${filterTarget} + .search-results`);
@@ -394,9 +436,15 @@ function displayAvailableFilter(arrayDatas,arrayItems,filterTarget){
 		let option = document.createElement('li');
 		option.classList.add('option');
 		option.setAttribute('value',item);
-		option.textContent = item ;
 
+        if (typeof item === 'number'){
+            option.textContent = `${item} mins` ;
+        } else {
+            option.textContent = item ;
+        }
 
+       
+	
         option.addEventListener('click',() =>{
 
             saveTag(item,parentItem);
@@ -475,9 +523,16 @@ function displayRecipesByFilter(arrayRecipes,parentItem,selectedItem) {
 
                 })
 
-        } else {
+        }  else if (parentItem === 'timing') {
+            
+            moreFiltered = arrayRecipes.filter((recipe) => {
 
-                    console.warn('no Recipes matching');
+                return recipe.time.toString().toLowerCase().includes(selectedItem);
+
+            })
+
+    } else {
+            console.warn('no Recipes matching');
         }
 
     displayRecipes(moreFiltered);
