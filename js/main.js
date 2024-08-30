@@ -91,17 +91,6 @@ if (document.body.classList.contains(`${currentPage}`)) {
     }
 
 
-    // Remove Tags (testing width Highest level of delegation)        
-     document.querySelector('.recipe-taglist').addEventListener('click', (e) => {         
-		
-        if (e.target.classList.contains('fa-solid')) {
-                    
-                e.target.parentElement.remove();
-                
-         }                          
-
-	 	});
-
 // FINAL	
 }
 
@@ -168,6 +157,19 @@ function createTag(element,parentElement){
     `
     document.querySelector('.recipe-taglist').appendChild(tag);
 
+
+    tag.addEventListener('click', (e) => {
+        
+        if (e.target.classList.contains('fa-solid')) {
+
+            removeTag(element,parentElement);
+                    
+            e.target.parentElement.remove();
+
+        }                          
+
+     });
+
 }
 
 function saveTag(element,parentFilter){
@@ -184,11 +186,8 @@ function saveTag(element,parentFilter){
  
           };
 
-});
+    });
 
-
-    
-     
     // if (parentFilter === "ingredients") {
         
     //     let ingredientsTags = [];
@@ -212,8 +211,19 @@ function saveTag(element,parentFilter){
 
     // }
 
-    console.log('filterWithTags',resultTags);
 
+}
+
+function removeTag(element,parentFilter) {
+
+    if (resultTags[parentFilter].indexOf(element) !== -1) {
+            
+            let indexTag = resultTags[parentFilter].indexOf(element);
+
+            resultTags[parentFilter].splice(indexTag,1);
+        }
+
+    console.log(resultTags)
 }
 
 function updateResults(arrayDatas){
