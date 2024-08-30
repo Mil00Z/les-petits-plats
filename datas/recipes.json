@@ -1,0 +1,312 @@
+{
+  "recipes":[
+    {
+      "id": 1,
+      "image": "hf/chaussons-cantal.jpg",
+      "name" : "Chaussons d'été au cantal AOP & poivrons avec une salade aux noix",
+      "servings" : 2,
+      "ingredients": [
+          {
+              "ingredient" : "Pâte à tarte",
+              "quantity" : 1
+          },
+          {
+              "ingredient" : "Cantal AOP",
+              "quantity" : 100,
+              "unit":"grammes"
+          },
+          {
+              "ingredient" : "Herbes de Provence",
+              "quantity" : 0.5,
+              "unit":"sachet"
+          },
+          {
+              "ingredient" : "Noix concassées ",
+              "quantity" : 1,
+              "unit" : "sachet"
+          },
+          {
+              "ingredient" : "Poivron",
+              "quantity" : 1
+          },
+          {
+            "ingredient" : "Courgette",
+            "quantity" : 1
+          },
+          {
+            "ingredient" : "Crème épaisse",
+            "quantity" : 60,
+            "unit": "grammes"
+          },
+          {
+            "ingredient" : "Salade verte - Mâche",
+            "quantity" : 60,
+            "unit": "grammes"
+          }
+      ],
+      "time": 40,
+      "description": "Découvrez une symphonie estivale de saveurs avec nos chaussons croustillants, alliant subtilement légumes ensoleillés et cantal. Accompagnée d'une salade fraîche et colorée, cette fusion gourmande offre un équilibre exquis de saveurs !",
+      "appliance": "Four",
+      "ustensils": ["poêle", "bol", "saladier","papier sulfurisé","plaque de cuisson" ]
+  },
+  {
+      "id": 2,
+      "image": "hf/vege-teriyaki.jpg",
+      "name" : "Le Végé : émincés végétariens façon teriyak",
+      "servings": 2,
+      "ingredients": [
+        {
+          "ingredient" : "Emincés Végétariens",
+          "quantity" : 400,
+          "unit":"grammes"
+      },
+      {
+          "ingredient" : "Riz blanc",
+          "quantity" : 100,
+          "unit":"grammes"
+      },
+      {
+        "ingredient" : "Oignon",
+        "quantity" : 1
+      },
+      {
+        "ingredient" : "Gousse d'Ail",
+        "quantity" : 1
+      },
+      {
+        "ingredient" : "Carotte",
+        "quantity" : 1
+      },
+      {
+          "ingredient" : "Brocolis",
+          "quantity" : 1
+      },
+      {
+        "ingredient" : "Gimgembre frais",
+        "quantity" :1,
+        "unit": "cm"
+      },
+      {
+      "ingredient" : "Oignons frits",
+      "quantity" : 0.5,
+      "unit":"sachet"
+      },
+      {
+        "ingredient" : "Sauce Soja",
+        "quantity" :1,
+        "unit": "sachet"
+      },
+      {
+        "ingredient" : "Huile de sésame",
+        "quantity" :1,
+        "unit": "sachet"
+      }
+    ],
+      "time": 30,
+      "description": "Épatez vos papilles avec notre joyeux mélange de légumes teriyaki et d'émincés végétariens. Un festin coloré qui prouve que la cuisine sans viande peut être tout aussi délicieuse et amusante !",
+      "appliance": "Woke/sauteuse",
+      "ustensils": ["Passoire","Casserole avec couvercle",
+      "Râpe","Éplucheur","Bol"]
+  },{
+      "id": 3,
+      "image": "hf/poulet-fraise.jpg",
+      "name": "Poulet & réduction fraise balsamique",
+      "servings": 2,
+      "ingredients": [
+          {
+            "ingredient": "Pommes de terre",
+            "quantity" : 500,
+            "unit": "grammes"         
+        },
+          {
+              "ingredient": "Filets de Poulet",
+              "quantity" : 200,
+              "unit": "grammes"          
+          },
+          {
+              "ingredient": "Gousse d'Ail",
+              "quantity" :1
+          },
+          {
+            "ingredient": "Brocolis",
+            "quantity" : 400,
+            "unit" : "grammes"
+        },
+        {
+          "ingredient": "Echalote",
+          "quantity" : 60,
+          "unit" : "grammes"
+        },
+        {
+            "ingredient": "Romarin séché",
+            "quantity" : 0.5,
+            "unit" : "sachet"
+          },
+        {
+          "ingredient": "Confiture de fraises",
+          "quantity" : 10,
+          "unit" : "grammes"
+        }
+      ],
+      "time": 35,
+      "description": "L’association de la fraise et du vinaigre balsamique n’est pas connue de tous, et pourtant ! Cette réduction à la saveur aigre-douce s’associe parfaitement avec ce fruit sucré qu’est la fraise. Tentez l’expérience aujourd’hui avec ce poulet accompagné de délicieuses pommes de terre, de brocoli et de la fameuse réduction fraise balsamique !",
+      "appliance": "woke/sauteuse",
+      "ustensils": ["Sauteuses avec couvercle","Eplucheur","Passoire"]
+    },
+    {
+    "id": 4,
+    "image": "hf/saumon-pistou.jpg",
+    "name": "Saumon en papillote & pistou maison",
+    "servings": 2,
+    "ingredients": [
+        {
+          "ingredient": "Filets de saumon avec peau",
+          "quantity" : 400,
+          "unit":"grammes"   
+        },
+        {
+            "ingredient": "Rigatoni",
+            "quantity" : 200,
+            "unit": "grammes"          
+        },
+        {
+            "ingredient": "Tomate",
+            "quantity" : 1
+        },
+        {
+          "ingredient": "Citron",
+          "quantity" : 0.5
+        },
+        {
+            "ingredient": "Basilic",
+            "quantity" : 80,
+            "unit" : "grammes"
+        }
+    ],
+    "time": 40,
+    "description": "La cuisson en papillote permet au saumon de cuire doucement dans ses propres jus, préservant ainsi sa tendreté et sa saveur. Cette méthode de cuisson à la vapeur crée une expérience culinaire légère et saine, où le poisson reste moelleux et savoureux. Ce plat frais et gourmand saura faire plaisir à vos papilles !",
+    "appliance": "Four",
+    "ustensils": ["Casserole avec couvercle","Sauteuse avec couvercle","Passoire","Plat à four","Eplucheur","Bol","Papier Aluminium"]
+    },
+    {
+        "id": 5,
+        "image": "hf/enchiladas-veggie.jpg",
+        "name": "Enchiladas veggie gratinées aux haricots noirs",
+        "servings": 2,
+        "ingredients": [
+            {
+                "ingredient": "Tortillas de blé (ou équivalent)",
+                "quantity" : 4        
+            },
+            {
+              "ingredient": "Haricots noirs",
+              "quantity" : 400,
+              "unit": "grammes"         
+            },
+            {
+                "ingredient": "Quinoa",
+                "quantity" : 50,
+                "unit": "grammes"          
+            },
+            {
+                "ingredient": "Chair de tomates",
+                "quantity": 100,
+                "unit":"grammes"
+            },
+            {
+                "ingredient": "Crème épaisse",
+                "quantity": 100,
+                "unit":"grammes"
+            },
+            {
+                "ingredient": "Pesto Rosso",
+                "quantity": 60,
+                "unit":"grammes"
+            },
+            {
+              "ingredient": "Gouda râpé",
+              "quantity" : 50,
+              "unit" : "grammes"
+            },
+            {
+            "ingredient": "Epices mexicaines",
+            "quantity" : 6,
+            "unit" : "grammes"
+            }
+        ],
+        "time": 50,
+        "description": "Connaissez-vous les enchiladas ? C’est un plat typiquement mexicain composé de tortillas farcies, roulées et nappées d’une sauce légèrement pimentée, puis gratinées avec du fromage, bien sûr ! Alors que les enchiladas sont traditionnellement garnies de viande, cette version réunit deux protéines végétales : le quinoa et les haricots noirs ! La gourmandise à l’état pur, ¡Ay, caramba!",
+        "appliance": "Four",
+        "ustensils": ["Casserole avec couvercle","Poele","Passoire"]
+      },
+      {
+      "id": 6,
+      "image": "hf/manouche-libanais.jpg",
+      "name": "Man'ouché libanais, carotte rôtie & houmous",
+      "servings": 2,
+      "ingredients": [
+            {
+            "ingredient": "Pain Pita",
+            "quantity" : 4
+          },
+          {
+            "ingredient": "Gousse d'Ail",
+            "quantity" : 0.5  
+          },
+          {
+              "ingredient": "Tomate",
+              "quantity" : 2
+          },
+          {
+            "ingredient": "Carotte",
+            "quantity" : 2
+        },
+          {
+            "ingredient": "Concombre",
+            "quantity" : 1
+        },
+          {
+            "ingredient": "Citron",
+            "quantity" : 0.5
+          },
+          {
+              "ingredient": "Fromage à la grecque",
+              "quantity" : 100,
+              "unit": "grammes"          
+          },
+          {
+              "ingredient": "Basilic",
+              "quantity" : 80,
+              "unit" : "grammes"
+          },
+          {
+            "ingredient": "Pistaches décortiquées",
+            "quantity" : 1,
+            "unit":"sachet"
+          },
+          {
+            "ingredient": "Epices Zaatar",
+            "quantity" : 6,
+            "unit":"grammes"
+          },{
+            "ingredient": "Cumin",
+            "quantity" : 5,
+            "unit":"grammes"
+          },
+          {
+            "ingredient": "Houmous",
+            "quantity" : 50,
+            "unit":"grammes"
+          }
+      ],
+      "time": 40,
+      "description": "Le saviez-vous ? Le Man'ouché est une galette typique de la cuisine levantine, composée d’une pâte levée, arrosée d’huile d’olive et saupoudrée de zaatar, un mélange d’épices dont la composition varie selon les régions mais qui comprend généralement du thym, de l’origan, du sumac et des graines de sésame.",
+      "appliance": "Four",
+      "ustensils": ["Plaque de cuisson","papier sulfurisé","Saladier","Eplucheur","Bol","Papier Aluminium"]
+      }
+  ]
+}
+
+
+
+
