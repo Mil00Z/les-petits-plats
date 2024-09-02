@@ -24,7 +24,7 @@ let resultsMatching = [];
 let resultTags = {};
 
 const currentPage = 'home';
-if (document.body.classList.contains(`${currentPage}`)) {
+if (document.body.classList.contains(currentPage)) {
 
     // Display Starter Elements
     init();
@@ -76,6 +76,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
             displayAvailableFilter(resultsMatching,getIngredientsData(resultsMatching),'#ingredients');
 
+            
             updateNowIngredients(resultsMatching);
             updateNowUstensils(resultsMatching);
             updateNowAppliances(resultsMatching);
@@ -166,8 +167,10 @@ function createTag(element,parentElement){
         
         if (e.target.classList.contains('fa-solid')) {
 
+            //Remove datas from Tag Object
             removeTag(element,parentElement);
                     
+            //Remove Tag Component of the DOM
             e.target.parentElement.remove();
 
         }                          
@@ -188,7 +191,7 @@ function saveTag(element,parentFilter){
 
            resultTags[`${filterName}`].push(element);
  
-          };
+        };
 
     });
 
@@ -215,7 +218,7 @@ function saveTag(element,parentFilter){
 
     // }
 
-
+    console.log(resultTags);
 }
 
 function removeTag(element,parentFilter) {
@@ -444,7 +447,6 @@ function displayAvailableFilter(arrayDatas,arrayItems,filterTarget){
         }
 
        
-	
         option.addEventListener('click',() =>{
 
             saveTag(item,parentItem);
@@ -478,41 +480,28 @@ function getAllFilter() {
 
 function displayRecipesByFilter(arrayRecipes,parentItem,selectedItem) {
 
+    const shortcut = (ingred)=> {
+        return ingred.includes(selectedItem);
+    };
+
     let moreFiltered;
 
     console.log('**Input recettes (filtrees ?) 1',arrayRecipes,selectedItem);
 
         if (parentItem === 'ingredients') {
 
-                moreFiltered = arrayRecipes.filter((recipe) =>{
+            moreFiltered = arrayRecipes.filter((recipe) =>{
 
-                    let ingredientsArray = recipe.ingredients.map((ingredient)=> {
-
+                return recipe.ingredients.map((ingredient)=> {
                         return ingredient.ingredient.toLowerCase();
-                
-                    });
-    
-                    let ingredientMatch = ingredientsArray.some((ingredient)=> {
-                        
-                        return ingredient.includes(selectedItem);
-                    });
+                }).some(shortcut);
                    
-                    return ingredientMatch;
-        
-                });
+            },);
                 
         } else if (parentItem === 'ustensils'){
 
                 moreFiltered = arrayRecipes.filter((recipe) => {
-
-                  let ustensilsArray = recipe.ustensils.some((ustensils) => {
-
-                    return ustensils.includes(selectedItem);
-
-                  });  
-
-                  return ustensilsArray;
-
+                  return recipe.ustensils.some(shortcut);  
             });
 
         } else if (parentItem === 'appliances') {
@@ -531,12 +520,11 @@ function displayRecipesByFilter(arrayRecipes,parentItem,selectedItem) {
 
             })
 
-    } else {
+        } else {
             console.warn('no Recipes matching');
         }
 
-    displayRecipes(moreFiltered);
 
+    displayRecipes(moreFiltered);
     console.log('%%% Output Recettes (filtrees) 2',moreFiltered);
-                
 }
