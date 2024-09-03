@@ -183,17 +183,19 @@ function saveTag(element,parentFilter){
 
         const filtersName = getAllFilter();
 
-        filtersName.forEach((filterName) => {
+        let filterExist = filtersName.find((filterName) => {
 
-        if (parentFilter === filterName) {
+            return filterName === parentFilter;
              
-           resultTags[`${filterName}`] ??= [];
+        });
 
-           resultTags[`${filterName}`].push(element);
- 
-        };
+        if (filterExist) {
 
-    });
+            resultTags[`${parentFilter}`] ??= [];
+
+            resultTags[`${parentFilter}`].push(element);
+
+        }
 
     // if (parentFilter === "ingredients") {
         
@@ -218,7 +220,7 @@ function saveTag(element,parentFilter){
 
     // }
 
-    console.log(resultTags);
+    // console.log(resultTags);
 }
 
 function removeTag(element,parentFilter) {
@@ -453,7 +455,11 @@ function displayAvailableFilter(arrayDatas,arrayItems,filterTarget){
 
             createTag(item,parentItem);
 
+            //Display recipes single filtered (one by one)
             displayRecipesByFilter(arrayDatas, parentItem, item);
+
+            //Display filtered AND selectionned recipes
+            testRecipesFiltered(arrayDatas,parentItem)
 
         });
 
@@ -528,3 +534,137 @@ function displayRecipesByFilter(arrayRecipes,parentItem,selectedItem) {
     displayRecipes(moreFiltered);
     console.log('%%% Output Recettes (filtrees) 2',moreFiltered);
 }
+
+
+function testRecipesFiltered(arrayData, parentFilter) {
+
+    let keys = resultTags[parentFilter];
+
+    console.log('** current TAGS :', parentFilter, keys);
+
+    let filteredRecipes = arrayData.filter((recipe) =>{
+
+        // #1
+        let matchedIngredients = keys.every((element) => { 
+
+            return recipe.ingredients.map((machin) => { 
+
+                return machin.ingredient.toLowerCase();
+
+            }).includes(element);
+
+        });
+
+        // #2
+        let matchedUstensils = keys.every((element) => {
+
+            return recipe.ustensils.includes(element);
+
+        });
+
+        // #3
+        let matchedAppliances = keys.every((element) => {
+
+            let applianceArray = [recipe.appliance.toLowerCase()];
+
+            return applianceArray.includes(element)
+
+        });
+
+   
+
+    console.log("matchedIngredient:", matchedIngredients);
+    console.log("matchedUstensils:", matchedUstensils);
+    console.log("matchedAppliances:", matchedAppliances);
+
+        
+        // return matchedIngredients;
+        // return matchedUstensils;
+        // return matchedAppliances;
+
+        let result = matchedIngredients || matchedUstensils || matchedAppliances;
+        console.log("result:", result);
+    
+        return result;
+
+    });
+
+
+    console.log('filtered 2nd time', filteredRecipes)
+    displayRecipes(filteredRecipes)
+
+   
+    // if (parentFilter ==='ingredients') {
+
+    //     let filteredIngredients = arrayData.filter((recipe) => {
+
+
+    //         let truc = recipe.ingredients.map((machin) => {
+    
+    //             return machin.ingredient.toLowerCase();
+        
+    //         });
+    
+
+    //         let existIngredients = keys.every((element) => {
+
+    //             let result = truc.includes(element);
+
+    //             console.log(element,result);
+        
+    //             return result ;
+        
+    //     })
+
+    //     return existIngredients
+    // });
+
+    // displayRecipes(filteredIngredients);
+
+    // } else if (parentFilter === 'ustensils') {
+
+    //     let filteredUstensils = arrayData.filter((recipe) => {
+
+    //         console.log(recipe.ustensils);
+
+    //         let existUstensils =  keys.every((element) => {
+
+    //             return recipe.ustensils.includes(element);
+    //        });
+
+    //         console.log(existUstensils)
+
+    //         return existUstensils;
+
+    //     });
+
+    //     displayRecipes(filteredUstensils);
+
+    // } else if (parentFilter === 'appliances') {
+        
+    //     let filteredAppliances = arrayData.filter((recipe) => {
+
+    //         let applianceArray = [recipe.appliance.toLowerCase()]
+            
+    //         let existAppliances =  keys.every((element) => {
+
+    //             return applianceArray.includes(element);
+
+    //        });
+
+    //         return existAppliances;
+
+    //     });
+
+    //     displayRecipes(filteredAppliances);
+
+    // }
+
+  
+    
+    
+
+    
+};
+
+    
