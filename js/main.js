@@ -91,7 +91,15 @@ if (document.body.classList.contains(currentPage)) {
         console.warn('No datas searched available');
     }
 
+    
 
+// Testing Persistance of datas tags
+document.querySelector('footer').addEventListener('click',(e) =>{
+
+    console.log(Array.from(Object.values(resultTags)));
+
+});
+    
 // FINAL	
 }
 
@@ -157,9 +165,10 @@ function createTag(element,parentElement){
     tag.setAttribute('data-parent',parentElement);
 
     tag.innerHTML = `
-    ${element}
+    ${typeof element === 'number' ? element + 'mins' : element}
     <i class="fa-solid fa-xmark"></i>
     `
+
     document.querySelector('.recipe-taglist').appendChild(tag);
 
 
@@ -169,9 +178,12 @@ function createTag(element,parentElement){
 
             //Remove datas from Tag Object
             removeTag(element,parentElement);
-                    
+
             //Remove Tag Component of the DOM
             e.target.parentElement.remove();
+
+            updateRecipesFiltered(resultTags);
+            
 
         }                          
 
@@ -230,9 +242,16 @@ function removeTag(element,parentFilter) {
             let indexTag = resultTags[parentFilter].indexOf(element);
 
             resultTags[parentFilter].splice(indexTag,1);
+
+
+            if(resultTags[parentFilter].length === 0) {
+
+                delete resultTags[parentFilter];
+                
+            }
         }
 
-    console.log(resultTags)
+    console.log('// Tags Clicked Available', resultTags);
 }
 
 function updateResults(arrayDatas){
@@ -448,7 +467,7 @@ function displayAvailableFilter(arrayDatas,arrayItems,filterTarget){
             option.textContent = item ;
         }
 
-       
+       //Trigger Event For new Recips results
         option.addEventListener('click',() =>{
 
             saveTag(item,parentItem);
@@ -456,10 +475,10 @@ function displayAvailableFilter(arrayDatas,arrayItems,filterTarget){
             createTag(item,parentItem);
 
             //Display recipes single filtered (one by one)
-            displayRecipesByFilter(arrayDatas, parentItem, item);
+            // displayRecipesByFilter(arrayDatas, parentItem, item);
 
-            //Display filtered AND selectionned recipes
-            testRecipesFiltered(arrayDatas,parentItem)
+            //Display filtered cross selectioned recipes
+            displayRecipesFiltered(arrayDatas,parentItem)
 
         });
 
@@ -484,6 +503,7 @@ function getAllFilter() {
         return filters;
 }
 
+// First Version of display filter recipes
 function displayRecipesByFilter(arrayRecipes,parentItem,selectedItem) {
 
     const shortcut = (ingred)=> {
@@ -536,15 +556,17 @@ function displayRecipesByFilter(arrayRecipes,parentItem,selectedItem) {
 }
 
 
-function testRecipesFiltered(arrayData, parentFilter) {
+function displayRecipesFiltered(arrayData, parentFilter) {
 
     let keys = resultTags[parentFilter];
 
+    console.log('// All tags on memory :', resultTags);
     console.log('** current TAGS :', parentFilter, keys);
+    
 
     let filteredRecipes = arrayData.filter((recipe) =>{
 
-        // #1
+        // #1 Ingredients
         let matchedIngredients = keys.every((element) => { 
 
             return recipe.ingredients.map((machin) => { 
@@ -555,34 +577,46 @@ function testRecipesFiltered(arrayData, parentFilter) {
 
         });
 
-        // #2
+        // #2 Ustensils
         let matchedUstensils = keys.every((element) => {
 
-            return recipe.ustensils.includes(element);
-
+        return recipe.ustensils.includes(element);
         });
 
-        // #3
+        // #3 Appliancs
         let matchedAppliances = keys.every((element) => {
 
             let applianceArray = [recipe.appliance.toLowerCase()];
 
-            return applianceArray.includes(element)
+        return applianceArray.includes(element)
 
         });
 
-   
 
-    console.log("matchedIngredient:", matchedIngredients);
-    console.log("matchedUstensils:", matchedUstensils);
-    console.log("matchedAppliances:", matchedAppliances);
+        // #4 Timing
+
+        let matchedTiming = keys.every((element) => {
+
+            let timingArray = [recipe.time];
+
+        return timingArray.includes(element);
+
+        });
+
+    
+
+    // console.log("matchedIngredient:", matchedIngredients);
+    // console.log("matchedUstensils:", matchedUstensils);
+    // console.log("matchedAppliances:", matchedAppliances);
+    // console.log("matchedTiming:", matchedTiming);
 
         
         // return matchedIngredients;
         // return matchedUstensils;
         // return matchedAppliances;
 
-        let result = matchedIngredients || matchedUstensils || matchedAppliances;
+        let result = matchedIngredients || matchedUstensils || matchedAppliances || matchedTiming;
+
         console.log("result:", result);
     
         return result;
@@ -667,4 +701,17 @@ function testRecipesFiltered(arrayData, parentFilter) {
     
 };
 
-    
+
+function updateRecipesFiltered(tagsObject) {
+
+    let updatedRecipesFiltered = Array.from(Object.values(tagsObject));
+
+    console.log('updatedRecipesFiltered',updatedRecipesFiltered);
+
+    if (updatedRecipesFiltered.length === 0) {
+
+        displayRecipes(recipes);
+
+    } 
+
+}
