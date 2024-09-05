@@ -24,7 +24,7 @@ let resultsMatching = [];
 let resultTags = {};
 
 const currentPage = 'home';
-if (document.body.classList.contains(`${currentPage}`)) {
+if (document.body.classList.contains(currentPage)) {
 
     // Display Starter Elements
     init();
@@ -76,6 +76,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
             displayAvailableFilter(resultsMatching,getIngredientsData(resultsMatching),'#ingredients');
 
+            
             updateNowIngredients(resultsMatching);
             updateNowUstensils(resultsMatching);
             updateNowAppliances(resultsMatching);
@@ -90,7 +91,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
         console.warn('No datas searched available');
     }
 
-
+    
 // FINAL	
 }
 
@@ -156,9 +157,10 @@ function createTag(element,parentElement){
     tag.setAttribute('data-parent',parentElement);
 
     tag.innerHTML = `
-    ${element}
+    ${typeof element === 'number' ? element + 'mins' : element}
     <i class="fa-solid fa-xmark"></i>
     `
+
     document.querySelector('.recipe-taglist').appendChild(tag);
 
 
@@ -166,10 +168,14 @@ function createTag(element,parentElement){
         
         if (e.target.classList.contains('fa-solid')) {
 
+            //Remove datas from Tag Object
             removeTag(element,parentElement);
-                    
+
+            //Remove Tag Component of the DOM
             e.target.parentElement.remove();
 
+            displayRecipesFiltered();
+            
         }                          
 
      });
@@ -180,17 +186,19 @@ function saveTag(element,parentFilter){
 
         const filtersName = getAllFilter();
 
-        filtersName.forEach((filterName) => {
+        let filterExist = filtersName.find((filterName) => {
 
-        if (parentFilter === filterName) {
+            return filterName === parentFilter;
              
-           resultTags[`${filterName}`] ??= [];
+        });
 
-           resultTags[`${filterName}`].push(element);
- 
-          };
+        if (filterExist) {
 
-    });
+            resultTags[`${parentFilter}`] ??= [];
+
+            resultTags[`${parentFilter}`].push(element);
+
+        }
 
     // if (parentFilter === "ingredients") {
         
@@ -215,7 +223,7 @@ function saveTag(element,parentFilter){
 
     // }
 
-
+    // console.log(resultTags);
 }
 
 function removeTag(element,parentFilter) {
@@ -225,9 +233,16 @@ function removeTag(element,parentFilter) {
             let indexTag = resultTags[parentFilter].indexOf(element);
 
             resultTags[parentFilter].splice(indexTag,1);
+
+
+            if(resultTags[parentFilter].length === 0) {
+
+                delete resultTags[parentFilter];
+                
+            }
         }
 
-    console.log(resultTags)
+    console.log('// Tags Clicked Available', resultTags);
 }
 
 function updateResults(arrayDatas){
@@ -438,20 +453,22 @@ function displayAvailableFilter(arrayDatas,arrayItems,filterTarget){
 		option.setAttribute('value',item);
 
         if (typeof item === 'number'){
+
             option.textContent = `${item} mins` ;
+
         } else {
             option.textContent = item ;
         }
 
-       
-	
+       //Trigger Event For new Recips results
         option.addEventListener('click',() =>{
 
             saveTag(item,parentItem);
 
             createTag(item,parentItem);
 
-            displayRecipesByFilter(arrayDatas, parentItem, item);
+            //Display filtered cross selectioned recipes
+            displayRecipesFiltered(arrayDatas)
 
         });
 
@@ -476,67 +493,102 @@ function getAllFilter() {
         return filters;
 }
 
-function displayRecipesByFilter(arrayRecipes,parentItem,selectedItem) {
+function displayRecipesFiltered(arrayDatas) {
 
-    let moreFiltered;
+    console.log('// All tags on memory :', resultTags);
+   
 
-    console.log('**Input recettes (filtrees ?) 1',arrayRecipes,selectedItem);
+    let filteredRecipes = [...recipes].filter((recipe) =>{
 
-        if (parentItem === 'ingredients') {
+        // let matchedSearchedValue = true;
 
-                moreFiltered = arrayRecipes.filter((recipe) =>{
 
-                    let ingredientsArray = recipe.ingredients.map((ingredient)=> {
+        // const searchValue = document.querySelector('#main-search').value;
 
-                        return ingredient.ingredient.toLowerCase();
-                
-                    });
-    
-                    let ingredientMatch = ingredientsArray.some((ingredient)=> {
-                        
-                        return ingredient.includes(selectedItem);
-                    });
-                   
-                    return ingredientMatch;
-        
-                });
-                
-        } else if (parentItem === 'ustensils'){
+        // if (searchValue.length === 0) {
+        //     matchedSearchedValue = true ;
+        // } else {
 
-                moreFiltered = arrayRecipes.filter((recipe) => {
+        //         //Filtre
 
-                  let ustensilsArray = recipe.ustensils.some((ustensils) => {
+        // }
 
-                    return ustensils.includes(selectedItem);
+        let matchedIngredients;
 
-                  });  
+        if(!resultTags['ingredients']){
 
-                  return ustensilsArray;
+            matchedIngredients = true;
 
-            });
+        } else {
 
-        } else if (parentItem === 'appliances') {
-            
-                moreFiltered = arrayRecipes.filter((recipe) => {
+            const ingredientsArray = recipe.ingredients.map((ingredient)=> ingredient.ingredient.toLowerCase())
 
-                    return recipe.appliance.toLowerCase().includes(selectedItem);
+            // #1 Ingredients
+            matchedIngredients = resultTags['ingredients'].every((element) => ingredientsArray.includes(element));
 
-                })
-
-        }  else if (parentItem === 'timing') {
-            
-            moreFiltered = arrayRecipes.filter((recipe) => {
-
-                return recipe.time.toString().toLowerCase().includes(selectedItem);
-
-            })
-
-    } else {
-            console.warn('no Recipes matching');
         }
 
-    displayRecipes(moreFiltered);
+        let matchedUstensils;
 
-    console.log('%%% Output Recettes (filtrees) 2',moreFiltered);
-                
-}
+        if(!resultTags['ustensils']){
+
+            matchedUstensils = true;
+
+        } else {
+
+            // #2 Ustensils
+            matchedUstensils = resultTags['ustensils'].every((element) => recipe.ustensils.includes(element));
+    
+        }
+
+
+        let matchedAppliances;
+
+        if(!resultTags['appliances']){
+
+            matchedAppliances = true;
+
+        } else {
+
+        // #3 Appliances
+        matchedAppliances = resultTags['appliances'].every((element) => {
+
+            let applianceArray = [recipe.appliance.toLowerCase()];
+
+        return applianceArray.includes(element)
+
+        });
+
+        }
+
+        
+        let matchedTiming;
+        if(!resultTags['timing']){
+
+            matchedTiming = true;
+
+        } else {
+
+        //#4 Timing
+        matchedTiming = resultTags['timing'].some((element) => {
+    
+            let timingArray = [recipe.time];
+    
+        return timingArray.includes(element);
+    
+            });
+
+        }
+
+        let result = matchedIngredients && matchedUstensils && matchedAppliances && matchedTiming;
+    
+        return result;
+
+    });
+
+    console.log('filtered 2nd time', filteredRecipes)
+
+    displayRecipes(filteredRecipes)
+
+
+};
