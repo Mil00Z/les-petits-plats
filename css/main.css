@@ -50,6 +50,16 @@ body{
 .debeug {
     outline: var(--debeug);
 }
+.error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding:1rem;
+    text-align: center;
+    font-size:3rem;
+    color:var(--color-debeug);
+}
 
 ul {
     list-style-type: none;

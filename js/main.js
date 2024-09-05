@@ -1,25 +1,8 @@
 import { recipes } from "../datas/recipes.js";
 import { RecipeCard } from "./templates/recipeCard.js";
 
-// let helloRecipes=[];
-
-// const newRecipes = fetch('datas/recipes.json');
-// newRecipes.then((response) => response.json())
-// .then((data) => {
-//    let helloRecipes = data.recipes;
-//    displayRecipes(helloRecipes);
-
-//    helloRecipes.forEach((recipe) => {
-
-//     console.log(recipe)
-
-//        helloRecipes.push(recipe);
-//    })
-
-// });
-
-
 // Sandbox of Results
+let recipesList = [...recipes];
 let resultsMatching = [];
 let resultTags = {};
 
@@ -46,7 +29,7 @@ if (document.body.classList.contains(currentPage)) {
 
         if(searchValue.length >= minimalQueryLength) {
 
-            resultsMatching = recipes.filter((recipe)=> {
+            resultsMatching = recipesList.filter((recipe)=> {
 
                 const nameMatch = recipe.name.toLowerCase().includes(searchValue);
                 const descriptionMatch = recipe.description.toLowerCase().includes(searchValue);
@@ -101,27 +84,33 @@ if (document.body.classList.contains(currentPage)) {
 
 
 //FUNCTIONS
-async function init () {
+async function init(path) {
 
+    if (path) {
+
+        recipesList = await getDatas();
+
+    } 
+    
     //Display Datas
-    displayRecipes(recipes);
+    displayRecipes(recipesList);
 
-    //Get Filters Initials Data
-    let appliances = getAppliancesData(recipes);
-    let ustensils = getUstensilsData(recipes);
-    let ingredients = getIngredientsData(recipes);
-    let timings = getTimingData(recipes);
+    // //Get Filters Initials Data
+    let appliances = getAppliancesData(recipesList);
+    let ustensils = getUstensilsData(recipesList);
+    let ingredients = getIngredientsData(recipesList);
+    let timings = getTimingData(recipesList);
 
     
-	 displayAvailableFilter(recipes,ingredients,'#ingredients');
-	 displayAvailableFilter(recipes,appliances,'#appliances');
-	 displayAvailableFilter(recipes,ustensils,'#ustensils');
-     displayAvailableFilter(recipes,timings,'#timing');
+	 displayAvailableFilter(recipesList,ingredients,'#ingredients');
+	 displayAvailableFilter(recipesList,appliances,'#appliances');
+	 displayAvailableFilter(recipesList,ustensils,'#ustensils');
+     displayAvailableFilter(recipesList,timings,'#timing');
 
-     updateNowIngredients(recipes);
-     updateNowUstensils(recipes);
-     updateNowAppliances(recipes);
-     updateNowTimings(recipes);
+     updateNowIngredients(recipesList);
+     updateNowUstensils(recipesList);
+     updateNowAppliances(recipesList);
+     updateNowTimings(recipesList);
 
 }
 
@@ -146,7 +135,7 @@ function displayRecipes(arrayRecipes){
 
 function updateCounterRecipes(datas) {
 
-    document.querySelector(`.count`).textContent = datas.length;
+    document.querySelector(`.count`).textContent = datas ? datas.length : 'aucunes';
 
 }
 
@@ -250,15 +239,17 @@ function updateResults(arrayDatas){
     window.localStorage.setItem('results-matching',JSON.stringify(arrayDatas));
 }
 
-function getResults() {
 
-    if (window.localStorage.getItem('results-matching') !== null) {
 
-        let arrayDatas= JSON.parse(window.localStorage.getItem('results-matching'))
+// function getResults() {
 
-        return arrayDatas;
-    }
-}
+//     if (window.localStorage.getItem('results-matching') !== null) {
+
+//         let arrayDatas= JSON.parse(window.localStorage.getItem('results-matching'))
+
+//         return arrayDatas;
+//     }
+// }
 
 
 function updateNowIngredients(arrayDatas) {
@@ -492,16 +483,19 @@ function displayRecipesFiltered() {
 
     if (resultsMatching.length !== 0){
 
-        arrayDatas = [...resultsMatching];
+        arrayDatas = resultsMatching;
+        console.log('2nd search Flow',arrayDatas);
 
     } else {
 
-        arrayDatas = [...recipes];
+        arrayDatas = recipesList;
+        console.log('1st search Flow',arrayDatas);
+
     }
 
     let filteredRecipes = arrayDatas.filter((recipe) =>{
 
-        let matchedIngredients;
+        let matchedIngredients = true;
 
         if(!resultTags['ingredients']){
 
@@ -516,7 +510,7 @@ function displayRecipesFiltered() {
 
         }
 
-        let matchedUstensils;
+        let matchedUstensils = true;
 
         if(!resultTags['ustensils']){
 
@@ -530,7 +524,7 @@ function displayRecipesFiltered() {
         }
 
 
-        let matchedAppliances;
+        let matchedAppliances = true;
 
         if(!resultTags['appliances']){
 
@@ -550,7 +544,7 @@ function displayRecipesFiltered() {
         }
 
         
-        let matchedTiming;
+        let matchedTiming = true;
         if(!resultTags['timing']){
 
             matchedTiming = true;
@@ -576,5 +570,28 @@ function displayRecipesFiltered() {
 
     displayRecipes(filteredRecipes)
 
-
 };
+
+async function getDatas(){
+
+        try{
+
+            const response = await fetch('/datas/recipes.json');
+            const datas = await response.json();
+    
+            return datas.recipes;
+        
+        } catch {
+        
+                const errorMessage = 'Pas de datas disponibles';
+        
+                let errorArea = document.createElement('div');
+                errorArea.classList.add('error');
+                errorArea.textContent = `${errorMessage}`;
+               document.querySelector('.recipes-container').append(errorArea);
+        
+                //Display Log error
+                throw new Error (errorMessage);
+        }
+        
+}
