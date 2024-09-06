@@ -1,25 +1,8 @@
 import { recipes } from "../datas/recipes.js";
 import { RecipeCard } from "./templates/recipeCard.js";
 
-// let helloRecipes=[];
-
-// const newRecipes = fetch('datas/recipes.json');
-// newRecipes.then((response) => response.json())
-// .then((data) => {
-//    let helloRecipes = data.recipes;
-//    displayRecipes(helloRecipes);
-
-//    helloRecipes.forEach((recipe) => {
-
-//     console.log(recipe)
-
-//        helloRecipes.push(recipe);
-//    })
-
-// });
-
-
 // Sandbox of Results
+let recipesList = [...recipes];
 let resultsMatching = [];
 let resultTags = {};
 
@@ -27,7 +10,7 @@ const currentPage = 'home';
 if (document.body.classList.contains(currentPage)) {
 
     // Display Starter Elements
-    init();
+    init('hello');
 
     // Search Bar Feature
     document.querySelector('#main-search').addEventListener('input',(e) => {
@@ -46,7 +29,7 @@ if (document.body.classList.contains(currentPage)) {
 
         if(searchValue.length >= minimalQueryLength) {
 
-            resultsMatching = recipes.filter((recipe)=> {
+            resultsMatching = recipesList.filter((recipe)=> {
 
                 const nameMatch = recipe.name.toLowerCase().includes(searchValue);
                 const descriptionMatch = recipe.description.toLowerCase().includes(searchValue);
@@ -59,7 +42,7 @@ if (document.body.classList.contains(currentPage)) {
 
                 });
 
-                return nameMatch || descriptionMatch || ingredientMatch
+                return nameMatch || descriptionMatch || ingredientMatch;
 
             });
 
@@ -81,7 +64,9 @@ if (document.body.classList.contains(currentPage)) {
             updateNowUstensils(resultsMatching);
             updateNowAppliances(resultsMatching);
 
-	    }	
+	    }
+
+        console.log('Results By search bar =>', resultsMatching.length > 0 ? resultsMatching : 'no results');	
 
     });
 
@@ -92,34 +77,40 @@ if (document.body.classList.contains(currentPage)) {
     }
 
     
+
 // FINAL	
 }
 
 
 
-
 //FUNCTIONS
-async function init () {
+async function init(path) {
 
+    if (path) {
+
+        recipesList = await getDatas();
+
+    } 
+    
     //Display Datas
-    displayRecipes(recipes);
+    displayRecipes(recipesList);
 
-    //Get Filters Initials Data
-    let appliances = getAppliancesData(recipes);
-    let ustensils = getUstensilsData(recipes);
-    let ingredients = getIngredientsData(recipes);
-    let timings = getTimingData(recipes);
+    // //Get Filters Initials Data
+    let appliances = getAppliancesData(recipesList);
+    let ustensils = getUstensilsData(recipesList);
+    let ingredients = getIngredientsData(recipesList);
+    let timings = getTimingData(recipesList);
 
     
-	 displayAvailableFilter(recipes,ingredients,'#ingredients');
-	 displayAvailableFilter(recipes,appliances,'#appliances');
-	 displayAvailableFilter(recipes,ustensils,'#ustensils');
-     displayAvailableFilter(recipes,timings,'#timing');
+	 displayAvailableFilter(recipesList,ingredients,'#ingredients');
+	 displayAvailableFilter(recipesList,appliances,'#appliances');
+	 displayAvailableFilter(recipesList,ustensils,'#ustensils');
+     displayAvailableFilter(recipesList,timings,'#timing');
 
-     updateNowIngredients(recipes);
-     updateNowUstensils(recipes);
-     updateNowAppliances(recipes);
-     updateNowTimings(recipes);
+     updateNowIngredients(recipesList);
+     updateNowUstensils(recipesList);
+     updateNowAppliances(recipesList);
+     updateNowTimings(recipesList);
 
 }
 
@@ -139,18 +130,20 @@ function displayRecipes(arrayRecipes){
 
     });
 
-    updateCounterRecipes(arrayRecipes);
+    counterRecipes(arrayRecipes);
 }
 
-function updateCounterRecipes(datas) {
+function counterRecipes(datas) {
 
-    document.querySelector(`.count`).textContent = datas.length;
+    //Initial Count of Recipes
+    document.querySelector('.initial-count').textContent = recipesList.length;
+
+    //Dynamique Count of Recipes
+    document.querySelector(`.count`).textContent = datas ? datas.length : 'aucunes';
 
 }
 
 function createTag(element,parentElement){
-
-    // console.log(element);
 
     let tag = document.createElement('span');
     tag.classList.add('recipe-tag');
@@ -248,20 +241,8 @@ function removeTag(element,parentFilter) {
 function updateResults(arrayDatas){
 
     window.localStorage.setItem('results-matching',JSON.stringify(arrayDatas));
-
-    // console.log(getResults())
-
 }
 
-function getResults() {
-
-    if (window.localStorage.getItem('results-matching') !== null) {
-
-        let arrayDatas
-
-        return arrayDatas = JSON.parse(window.localStorage.getItem('results-matching'));
-    }
-}
 
 
 function updateNowIngredients(arrayDatas) {
@@ -356,12 +337,11 @@ function getAppliancesData(arrayData){
     });
 
     // /Get distinct item of a collection of values
-    let appliances = Array.from(new Set(allAppliances));
+    let appliances = Array.from(new Set(allAppliances)).sort((a,b) => {
+        return a.localeCompare(b);
+    });
 
-      //   console.log('^^ list appareils', appliances);
-
-		  return appliances;
-    
+	return appliances;
 }
 
 function getUstensilsData(arrayData){  
@@ -386,12 +366,11 @@ function getUstensilsData(arrayData){
     });
 
 
-    let ustensils = Array.from(new Set(ustenList));
+    let ustensils = Array.from(new Set(ustenList)).sort((a,b) => {
+        return a.localeCompare(b);
+    });
 
-        // console.log('** list ustensiles',ustensils);
-
-		return ustensils;
-
+	return ustensils;
  }
 
 function getIngredientsData(arrayData){
@@ -415,11 +394,11 @@ function getIngredientsData(arrayData){
 
 });
 
-    let ingredients = Array.from(new Set(ingredList));
+    let ingredients = Array.from(new Set(ingredList)).sort((a,b) => {
+        return a.localeCompare(b);
+    });
 
-   //  console.log('__ list ingredients',ingredients);
-
-		return ingredients;
+	return ingredients;
 }
 
 
@@ -431,11 +410,12 @@ function getTimingData(arrayData) {
 
     });
 
-    let timings = Array.from(new Set(allTiming));
+    let timings = Array.from(new Set(allTiming)).sort((a,b) => {
+        return a - b;
+    });
 
     return timings;
 }
-
 
 
 function displayAvailableFilter(arrayDatas,arrayItems,filterTarget){
@@ -468,7 +448,7 @@ function displayAvailableFilter(arrayDatas,arrayItems,filterTarget){
             createTag(item,parentItem);
 
             //Display filtered cross selectioned recipes
-            displayRecipesFiltered(arrayDatas)
+            displayRecipesFiltered()
 
         });
 
@@ -493,27 +473,26 @@ function getAllFilter() {
         return filters;
 }
 
-function displayRecipesFiltered(arrayDatas) {
+function displayRecipesFiltered() {
 
-    console.log('// All tags on memory :', resultTags);
-   
+    let arrayDatas;
 
-    let filteredRecipes = [...recipes].filter((recipe) =>{
+    if (resultsMatching.length !== 0){
 
-        // let matchedSearchedValue = true;
+        arrayDatas = resultsMatching;
+        console.log('2nd search Flow',arrayDatas);
 
+    } else {
 
-        // const searchValue = document.querySelector('#main-search').value;
+        arrayDatas = recipesList;
+        console.log('1st search Flow',arrayDatas);
 
-        // if (searchValue.length === 0) {
-        //     matchedSearchedValue = true ;
-        // } else {
+    }
 
-        //         //Filtre
+    let filteredRecipes = arrayDatas.filter((recipe) =>{
 
-        // }
-
-        let matchedIngredients;
+        // #1 Ingredients
+        let matchedIngredients = true;
 
         if(!resultTags['ingredients']){
 
@@ -523,12 +502,13 @@ function displayRecipesFiltered(arrayDatas) {
 
             const ingredientsArray = recipe.ingredients.map((ingredient)=> ingredient.ingredient.toLowerCase())
 
-            // #1 Ingredients
+            
             matchedIngredients = resultTags['ingredients'].every((element) => ingredientsArray.includes(element));
 
         }
 
-        let matchedUstensils;
+        // #2 Ustensils
+        let matchedUstensils = true;
 
         if(!resultTags['ustensils']){
 
@@ -536,13 +516,12 @@ function displayRecipesFiltered(arrayDatas) {
 
         } else {
 
-            // #2 Ustensils
             matchedUstensils = resultTags['ustensils'].every((element) => recipe.ustensils.includes(element));
     
         }
 
-
-        let matchedAppliances;
+        // #3 Appliances
+        let matchedAppliances = true;
 
         if(!resultTags['appliances']){
 
@@ -550,7 +529,7 @@ function displayRecipesFiltered(arrayDatas) {
 
         } else {
 
-        // #3 Appliances
+        
         matchedAppliances = resultTags['appliances'].every((element) => {
 
             let applianceArray = [recipe.appliance.toLowerCase()];
@@ -561,15 +540,14 @@ function displayRecipesFiltered(arrayDatas) {
 
         }
 
-        
-        let matchedTiming;
+        //#4 Timing
+        let matchedTiming = true;
         if(!resultTags['timing']){
 
             matchedTiming = true;
 
         } else {
 
-        //#4 Timing
         matchedTiming = resultTags['timing'].some((element) => {
     
             let timingArray = [recipe.time];
@@ -580,9 +558,7 @@ function displayRecipesFiltered(arrayDatas) {
 
         }
 
-        let result = matchedIngredients && matchedUstensils && matchedAppliances && matchedTiming;
-    
-        return result;
+        return  matchedIngredients && matchedUstensils && matchedAppliances && matchedTiming;
 
     });
 
@@ -590,5 +566,39 @@ function displayRecipesFiltered(arrayDatas) {
 
     displayRecipes(filteredRecipes)
 
-
 };
+
+async function getDatas(){
+
+        try{
+
+            const response = await fetch('/datas/recipes.json');
+            const datas = await response.json();
+    
+            return datas.recipes;
+        
+        } catch {
+        
+                const errorMessage = 'Pas de datas disponibles';
+        
+                let errorArea = document.createElement('div');
+                errorArea.classList.add('error');
+                errorArea.textContent = `${errorMessage}`;
+               document.querySelector('.recipes-container').append(errorArea);
+        
+                //Display Log error
+                throw new Error (errorMessage);
+        }
+        
+}
+
+
+// function getResults() {
+
+//     if (window.localStorage.getItem('results-matching') !== null) {
+
+//         let arrayDatas= JSON.parse(window.localStorage.getItem('results-matching'))
+
+//         return arrayDatas;
+//     }
+// }
