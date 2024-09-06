@@ -10,7 +10,7 @@ const currentPage = 'home';
 if (document.body.classList.contains(currentPage)) {
 
     // Display Starter Elements
-    init();
+    init('hello');
 
     // Search Bar Feature
     document.querySelector('#main-search').addEventListener('input',(e) => {
@@ -130,11 +130,15 @@ function displayRecipes(arrayRecipes){
 
     });
 
-    updateCounterRecipes(arrayRecipes);
+    counterRecipes(arrayRecipes);
 }
 
-function updateCounterRecipes(datas) {
+function counterRecipes(datas) {
 
+    //Initial Count of Recipes
+    document.querySelector('.initial-count').textContent = recipesList.length;
+
+    //Dynamique Count of Recipes
     document.querySelector(`.count`).textContent = datas ? datas.length : 'aucunes';
 
 }
@@ -241,17 +245,6 @@ function updateResults(arrayDatas){
 
 
 
-// function getResults() {
-
-//     if (window.localStorage.getItem('results-matching') !== null) {
-
-//         let arrayDatas= JSON.parse(window.localStorage.getItem('results-matching'))
-
-//         return arrayDatas;
-//     }
-// }
-
-
 function updateNowIngredients(arrayDatas) {
 
     let inputSearch = document.querySelector('#ingredients');
@@ -344,10 +337,11 @@ function getAppliancesData(arrayData){
     });
 
     // /Get distinct item of a collection of values
-    let appliances = Array.from(new Set(allAppliances));
+    let appliances = Array.from(new Set(allAppliances)).sort((a,b) => {
+        return a.localeCompare(b);
+    });
 
-		  return appliances;
-    
+	return appliances;
 }
 
 function getUstensilsData(arrayData){  
@@ -372,10 +366,11 @@ function getUstensilsData(arrayData){
     });
 
 
-    let ustensils = Array.from(new Set(ustenList));
+    let ustensils = Array.from(new Set(ustenList)).sort((a,b) => {
+        return a.localeCompare(b);
+    });
 
-		return ustensils;
-
+	return ustensils;
  }
 
 function getIngredientsData(arrayData){
@@ -399,11 +394,11 @@ function getIngredientsData(arrayData){
 
 });
 
-    let ingredients = Array.from(new Set(ingredList));
+    let ingredients = Array.from(new Set(ingredList)).sort((a,b) => {
+        return a.localeCompare(b);
+    });
 
-   //  console.log('__ list ingredients',ingredients);
-
-		return ingredients;
+	return ingredients;
 }
 
 
@@ -415,11 +410,12 @@ function getTimingData(arrayData) {
 
     });
 
-    let timings = Array.from(new Set(allTiming));
+    let timings = Array.from(new Set(allTiming)).sort((a,b) => {
+        return a - b;
+    });
 
     return timings;
 }
-
 
 
 function displayAvailableFilter(arrayDatas,arrayItems,filterTarget){
@@ -495,6 +491,7 @@ function displayRecipesFiltered() {
 
     let filteredRecipes = arrayDatas.filter((recipe) =>{
 
+        // #1 Ingredients
         let matchedIngredients = true;
 
         if(!resultTags['ingredients']){
@@ -505,11 +502,12 @@ function displayRecipesFiltered() {
 
             const ingredientsArray = recipe.ingredients.map((ingredient)=> ingredient.ingredient.toLowerCase())
 
-            // #1 Ingredients
+            
             matchedIngredients = resultTags['ingredients'].every((element) => ingredientsArray.includes(element));
 
         }
 
+        // #2 Ustensils
         let matchedUstensils = true;
 
         if(!resultTags['ustensils']){
@@ -518,12 +516,11 @@ function displayRecipesFiltered() {
 
         } else {
 
-            // #2 Ustensils
             matchedUstensils = resultTags['ustensils'].every((element) => recipe.ustensils.includes(element));
     
         }
 
-
+        // #3 Appliances
         let matchedAppliances = true;
 
         if(!resultTags['appliances']){
@@ -532,7 +529,7 @@ function displayRecipesFiltered() {
 
         } else {
 
-        // #3 Appliances
+        
         matchedAppliances = resultTags['appliances'].every((element) => {
 
             let applianceArray = [recipe.appliance.toLowerCase()];
@@ -543,7 +540,7 @@ function displayRecipesFiltered() {
 
         }
 
-        
+        //#4 Timing
         let matchedTiming = true;
         if(!resultTags['timing']){
 
@@ -551,7 +548,6 @@ function displayRecipesFiltered() {
 
         } else {
 
-        //#4 Timing
         matchedTiming = resultTags['timing'].some((element) => {
     
             let timingArray = [recipe.time];
@@ -595,3 +591,14 @@ async function getDatas(){
         }
         
 }
+
+
+// function getResults() {
+
+//     if (window.localStorage.getItem('results-matching') !== null) {
+
+//         let arrayDatas= JSON.parse(window.localStorage.getItem('results-matching'))
+
+//         return arrayDatas;
+//     }
+// }

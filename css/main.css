@@ -26,7 +26,7 @@
 --skeleton:80%;
 --regular-spacing:1rem;
 --radius:5px;
---regular-transi: all .3s ease-in-out;
+--regular-transi: all 1s ease-in-out;
 --debeug:3px dashed var(--color-debeug);
 }
 
@@ -49,6 +49,9 @@ body{
 
 .debeug {
     outline: var(--debeug);
+}
+.pop{
+    transform: scale(1.1);
 }
 .error {
     display: flex;
@@ -119,6 +122,10 @@ background-repeat: no-repeat;
     text-transform: uppercase;
     text-align: center;
     color:var(--secondary-color);
+}
+
+.initial-count{
+    color:var(--white-color);
 }
 
 .the-form{
@@ -347,6 +354,16 @@ form:focus-within .btn-search i {
 
 .card-recipe > a {
     display:flex;
+}
+
+.card-recipe:hover,
+.card-recipe:focus {
+    box-shadow: 3px 3px 9px var(--grey-color);
+}
+
+.card-recipe:hover > a,
+.card-recipe:focus > a{
+    cursor:pointer;
 }
 
 .recipe-parts{
