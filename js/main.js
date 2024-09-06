@@ -572,7 +572,7 @@ async function getDatas(){
 
         try{
 
-            const response = await fetch('/datas/recipes.json');
+            const response = await fetch('./datas/recipes.json');
             const datas = await response.json();
     
             return datas.recipes;
