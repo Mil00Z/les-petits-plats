@@ -2,86 +2,99 @@ import { recipes } from "../datas/recipes.js";
 import { RecipeCard } from "./templates/recipeCard.js";
 
 // Sandbox of Results
+// Sandbox of Results
+let recipesList = [...recipes];
 let resultsMatching = [];
+let resultTags = {};
 
 const currentPage = 'home';
 
 if (document.body.classList.contains(`${currentPage}`)) {
 
-    displayRecipe(recipes);
 
-    updateCounterRecipes(recipes);
+    displayRecipe(recipesList);
+
+    counterRecipes(recipesList);
 
     // Search Bar Feature
-    document.querySelector('#search').addEventListener('input',(e) => {
+    document.querySelector('#main-search').addEventListener('input',(e) => {
 
 		const minimalQueryLength = 3 ;
         let searchValue = e.target.value.toLowerCase();
 
-
         // SearchBar Clear => display all of datas
         if(searchValue === "") {
 
-            displayRecipe(recipes);
+            displayRecipe(recipesList);
 
             return ;
-
         }
-
 
         if(searchValue.length >= minimalQueryLength) {
 
-            for (let recipe in recipes){
+            for (let recipe in recipesList) {
     
-            let name = recipes[recipe].name.toLowerCase();
-            let description = recipes[recipe].description.toLowerCase();
-            let ingredientList = recipes[recipe].ingredients;
+            let name = recipesList[recipe].name.toLowerCase();
+            let description = recipesList[recipe].description.toLowerCase();
+            let ingredientList = recipesList[recipe].ingredients;
 
-                        
+                    
+                // Search By name
+                if (name.includes(searchValue)) {
+                    
+                    // If not already in the results
+                    if(resultsMatching.indexOf(recipesList[recipe]) === -1){
+
+                        resultsMatching.push(recipesList[recipe]);
+
+                    } 
+                   
                 // Search By Description
-                if (description.includes(searchValue) || name.includes(searchValue)) {
+                } else if (description.includes(searchValue)) {
 
-                
-                    if(resultsMatching.indexOf(recipes[recipe]) === -1){
+                    if(resultsMatching.indexOf(recipesList[recipe]) === -1){
 
-                        resultsMatching.push(recipes[recipe]);
-
-                        displayRecipe(resultsMatching);
+                        resultsMatching.push(recipesList[recipe]);
 
                     } 
 
-                // Search By Names
+                // Search By Ingredients Entries
                 } else if (ingredientList) {
 
                     for (let element in ingredientList) {
 
-                        let nameIngredient = ingredientList[element].ingredient.toLocaleUpperCase();
+                        let nameIngredient = ingredientList[element].ingredient.toLowerCase();
 
                         if (nameIngredient.includes(searchValue)) {
 
-                            if(resultsMatching.indexOf(recipes[recipe]) === -1){
+                            if(resultsMatching.indexOf(recipesList[recipe]) === -1){
 
-                                resultsMatching.push(recipes[recipe]);
-        
-                                displayRecipe(resultsMatching);
-        
+                                resultsMatching.push(recipesList[recipe]);
+
                             } 
 
                         }
+
                     }
 
+                // No Matching
                 } else {
 
-                    console.warn('no recipes are matching with this search ==', e.target.value);
+                    console.warn('no recipes are matching with this search ==>', e.target.value,resultsMatching);
                 }  
-
+            
             }
 
-            displayRecipe(resultsMatching);
-	    }	
-
+	    }
+        
         console.log(resultsMatching);
 
+        //Update Results
+        updateResults(resultsMatching)
+        
+        // Display Results 
+        displayRecipe(resultsMatching);
+       
     });
 
 
@@ -144,14 +157,24 @@ function displayRecipe(arrayElement){
 
         });
 
-    updateCounterRecipes(arrayElement);
+    counterRecipes(arrayElement);
 
 }
 
-function updateCounterRecipes(datas) {
+function counterRecipes(datas) {
 
-    document.querySelector(`.count`).textContent = datas.length;
+      //Initial Count of Recipes
+      document.querySelector('.initial-count').textContent = recipesList.length;
 
+      //Dynamique Count of Recipes
+      document.querySelector(`.count`).textContent = datas ? datas.length : 'aucunes';
+
+}
+
+
+function updateResults(arrayDatas){
+
+    window.localStorage.setItem('results-matching',JSON.stringify(arrayDatas));
 }
 
 function createTag(element,parentElement){
