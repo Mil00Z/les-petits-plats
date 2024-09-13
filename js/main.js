@@ -10,7 +10,7 @@ const currentPage = 'home';
 if (document.body.classList.contains(currentPage)) {
 
     // Display Starter Elements
-    init('hello');
+    init();
 
     // Search Bar Feature
     document.querySelector('#main-search').addEventListener('input',(e) => {
@@ -554,7 +554,7 @@ function displayRecipesFiltered() {
     
         return timingArray.includes(element);
     
-            });
+        });
 
         }
 
