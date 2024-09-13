@@ -17,80 +17,89 @@
 
 <body class="home">
 
-   <header class="main-header">
-
-    <div class="top-header">
-        <a href="/" aria-label="lien vers la Homepage" tabindex="0">
-            <img src="assets/logo.png" alt="logo des Petits Plats">
-        </a>
-    </div> 
-
-    <div class="hero">
-        <h1 class="hero-title">cherchez parmi plus de 1500 recettes<br>
-            du quotidien,simples et délicieuses
-        </h1>
-
-        <form action="" class="the-form">
-            <label for="search" class="labels">Recherche</label>
-            <input type="search" name="search" id="search" placeholder="Rechercher une recette, un ingrédient...">
-            <button type="submit" class="btn btn-search" aria-label="bouton de recherche"><i class="fa-solid fa-search"></i></button>
-        </form>
-    </div>
-
-   </header>
-
-   <main class="wrapper">
-
-    <section class="recipes-filter">
-
-        <form action="" class="form-select">
-
-            <div class="input-group">
-
-                <label for="ingredient" class="labels">ingredient</label>
-            <select name="ingredient" id="ingredient" class="filters">
-                <option value="Pomme">Pomme</option>
-                <option value="Lait">Lait</option>
-                <option value="Oeuf">Oeuf</option>
-                <option value="IngredN">IngredN</option>
-            </select>
-
-            <label for="appareils" class="labels">appareils</label>
-            <select name="appareils" id="appareils" class="filters">
-                <option value="app1">app1</option>
-                <option value="app2">app2</option>
-                <option value="app3">app3</option>
-            </select>
-
-
-            <label for="ustensiles" class="labels">ustensiles</label>
-            <select name="ustensiles" id="ustensiles" class="filters">
-                <option value="ust1">ust1</option>
-                <option value="ust2">ust2</option>
-                <option value="ust3">ust3</option>
-            </select>
-
-                
-            </div>
-            
-            <div class="recipe-taglist">
-            </div>
-
-        </form>
-
-        <div class="recipes-counter" aria-label="nombre de recettes disponibles"> <span class="count">XXXX</span> recettes</div>
-
-    </section>
-
-    <section class="recipes-container">
-    </section>
-
-   </main>
-
-
-   <footer class="main-footer">
-    <div class="copyright">&copy; 2024 - Les Petits Plats by <a href="https://github.com/Mil00Z"><span> Mil00Z </span></a></div>
-   </footer>
+    <header class="main-header">
+ 
+     <div class="top-header">
+         <a href="/" aria-label="lien vers la Homepage" tabindex="0">
+             <img src="assets/logo.png" alt="logo des Petits Plats">
+         </a>
+     </div> 
+ 
+     <div class="hero">
+         <h1 class="hero-title">cherchez parmi plus de <span class="initial-count">1500</span> recettes<br>
+             du quotidien,simples et délicieuses
+         </h1>
+ 
+         <form action="" class="the-form">
+             <label for="main-search" class="v-hidden">Recherche</label>
+             <input type="search" name="main-search" id="main-search" placeholder="Rechercher une recette, un ingrédient...">
+             <button type="submit" class="btn btn-search" aria-label="bouton de recherche"><i class="fa-solid fa-search"></i></button>
+         </form>
+     </div>
+ 
+    </header>
+ 
+    <main class="wrapper">
+ 
+     <section class="recipes-filter">
+ 
+         <form action="" class="form-select">
+ 
+             <div class="filters-group">
+ 
+                 <div class="filters">
+                     <label for="ingredients" class="labels">Ingrédients <i class="fa-solid fa-angle-down"></i></label>
+                     <input type="search" name="ingredients" id="ingredients" class="search-filter">
+ 
+                     <ul class="search-results">
+                     </ul>
+                 </div>
+ 
+                 <div class="filters">
+                     <label for="appliances" class="labels">Appareils<i class="fa-solid fa-angle-down"></i></label>
+                     <input type="search" name="appliances" id="appliances" class="search-filter">
+ 
+                     <ul class="search-results">
+                     </ul>
+                 </div>
+ 
+                 <div class="filters">
+                     <label for="ustensils" class="labels">Ustensiles<i class="fa-solid fa-angle-down"></i></label>
+                     <input type="search" name="ustensils" id="ustensils" class="search-filter">
+ 
+                     <ul class="search-results">
+                     </ul>
+                 </div>
+ 
+                 <div class="filters">
+                     <label for="timing" class="labels">Minutages<i class="fa-solid fa-angle-down"></i></label>
+                     <input type="search" name="timing" id="timing" class="search-filter">
+ 
+                     <ul class="search-results">
+                     </ul>
+                 </div>
+ 
+             </div>
+             
+             <div class="recipe-taglist">
+ 
+             </div>
+ 
+         </form>
+ 
+         <div class="recipes-counter" aria-label="nombre de recettes disponibles"> <span class="count"></span> recette(s)</div>
+ 
+     </section>
+ 
+     <section class="recipes-container">
+     </section>
+ 
+    </main>
+ 
+ 
+    <footer class="main-footer">
+     <div class="copyright">&copy; 2024 - Les Petits Plats by <a href="https://github.com/Mil00Z"><span> Mil00Z </span></a></div>
+    </footer>
     
 
 
