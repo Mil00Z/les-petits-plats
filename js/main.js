@@ -12,8 +12,8 @@ const currentPage = 'home';
 if (document.body.classList.contains(`${currentPage}`)) {
 
 
-     // Display Starter Elements
-     init('hello');
+    // Display Starter Elements
+    init();
 
     // Search Bar Feature
     document.querySelector('#main-search').addEventListener('input',(e) => {
@@ -86,14 +86,27 @@ if (document.body.classList.contains(`${currentPage}`)) {
             
             }
 
-            console.log(resultsMatching);
-
+        
             //Update Results
             updateResults(resultsMatching)
             
             // Display Results 
             displayRecipes(resultsMatching);
+
+            //Updates and Display News Filters with Currents Results
+            displayAvailableFilter(resultsMatching,getAppliancesData(resultsMatching),"#appliances");
+
+            displayAvailableFilter(resultsMatching,getUstensilsData(resultsMatching),'#ustensils');
+
+            displayAvailableFilter(resultsMatching,getIngredientsData(resultsMatching),'#ingredients');
+
+            
+            updateNowIngredients(resultsMatching);
+            updateNowUstensils(resultsMatching);
+            updateNowAppliances(resultsMatching);
 	    }
+
+        console.log('Results By search bar =>', resultsMatching.length > 0 ? resultsMatching : 'no results');	
         
     });
 
@@ -128,7 +141,7 @@ if (document.body.classList.contains(`${currentPage}`)) {
     }
 
      // Remove Tags (testing width Highest level of delegation)        
-     document.querySelector('.recipes-filter').addEventListener('click', (e) => {                  
+     document.querySelector('.recipe-taglist').addEventListener('click', (e) => {                  
         
         if (e.target.classList.contains('fa-solid')) {
                     
@@ -253,11 +266,50 @@ function createTag(element,parentElement){
     tag.setAttribute('data-parent',parentElement);
 
     tag.innerHTML = `
-    ${element}
+    ${typeof element === 'number' ? element + 'mins' : element}
     <i class="fa-solid fa-xmark"></i>
     `
+
     document.querySelector('.recipe-taglist').appendChild(tag);
 
+
+    tag.addEventListener('click', (e) => {
+        
+        if (e.target.classList.contains('fa-solid')) {
+
+            //Remove datas from Tag Object
+            removeTag(element,parentElement);
+
+            //Remove Tag Component of the DOM
+            e.target.parentElement.remove();
+
+            displayRecipesFiltered();
+            
+        }                          
+
+     });
+
+
+}
+
+
+function removeTag(element,parentFilter) {
+
+    if (resultTags[parentFilter].indexOf(element) !== -1) {
+            
+            let indexTag = resultTags[parentFilter].indexOf(element);
+
+            resultTags[parentFilter].splice(indexTag,1);
+
+
+            if(resultTags[parentFilter].length === 0) {
+
+                delete resultTags[parentFilter];
+                
+            }
+        }
+
+    console.log('// Tags Clicked Available', resultTags);
 }
 
 
