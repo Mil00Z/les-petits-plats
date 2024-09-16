@@ -32,7 +32,11 @@ if (document.body.classList.contains(`${currentPage}`)) {
 
         if(searchValue.length >= minimalQueryLength) {
 
+            resultsMatching = [];
+
             for (let recipe in recipesList) {
+
+            console.log(recipe);
     
             let name = recipesList[recipe].name.toLowerCase();
             let description = recipesList[recipe].description.toLowerCase();
@@ -85,18 +89,16 @@ if (document.body.classList.contains(`${currentPage}`)) {
             
             }
 
+            console.log(resultsMatching);
+
+            //Update Results
+            updateResults(resultsMatching)
+            
+            // Display Results 
+            displayRecipe(resultsMatching);
 	    }
         
-        console.log(resultsMatching);
-
-        //Update Results
-        updateResults(resultsMatching)
-        
-        // Display Results 
-        displayRecipe(resultsMatching);
-       
     });
-
 
     //Tags Feature
     let filtersElement = document.querySelectorAll('.filters');
