@@ -591,14 +591,3 @@ async function getDatas(){
         }
         
 }
-
-
-// function getResults() {
-
-//     if (window.localStorage.getItem('results-matching') !== null) {
-
-//         let arrayDatas= JSON.parse(window.localStorage.getItem('results-matching'))
-
-//         return arrayDatas;
-//     }
-// }
