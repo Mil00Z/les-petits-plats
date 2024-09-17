@@ -2,6 +2,7 @@
     --primary-color: #6C63FF;
     --secondary-color: #FFD15B;
     --third-color:#1B1B1B;
+    --corporate-color:#b94744;
     
     --body-font-family: 'Manrope', sans-serif;
     --body-font-size: 1rem;
@@ -11,6 +12,7 @@
     --title-font-family: 'Anton', sans-serif;
     --title-font-size: 3rem;
     --title-font-color:var(--third-color);
+    
     
     --white-color: #FFFFFF;
     --black-color:#000000;
